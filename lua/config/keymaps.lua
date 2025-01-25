@@ -30,3 +30,14 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+local map = vim.keymap.set
+
+map({ "i", "x", "n", "s" }, "<D-s>", "<cmd>w<cr><esc>", { desc = "[S]ave File" })
+map({ "i", "c" }, "<D-v>", "<C-r>+", { desc = "Paste" })
+map({ "t" }, "<D-v>", '<C-\\><C-o>"+p', { desc = "Paste" })
+
+map({ "i", "x", "n", "s" }, "<F2>", vim.lsp.buf.rename, { desc = "Rename Symbol" })
+
+map({ "t" }, "<Esc><Esc>", "<C-\\><C-N>")
+
