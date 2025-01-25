@@ -33,12 +33,12 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 local map = vim.keymap.set
 
-map({ "i", "x", "n", "s" }, "<D-s>", "<cmd>w<cr><esc>", { desc = "[S]ave File" })
-map({ "i", "c" }, "<D-v>", "<C-r>+", { desc = "Paste" })
-map({ "t" }, "<D-v>", '<C-\\><C-o>"+p', { desc = "Paste" })
+map({ 'i', 'x', 'n', 's' }, '<D-s>', '<cmd>w<cr><esc>', { desc = '[S]ave File' })
+map({ 'i', 'c' }, '<D-v>', '<C-r>+', { desc = 'Paste' })
+map({ 't' }, '<D-v>', '<C-\\><C-o>"+p', { desc = 'Paste' })
 
-map({ "i", "x", "n", "s" }, "<F2>", vim.lsp.buf.rename, { desc = "Rename Symbol" })
+map({ 'i', 'x', 'n', 's' }, '<F2>', vim.lsp.buf.rename, { desc = 'Rename Symbol' })
 
-map({ "t" }, "<Esc><Esc>", "<C-\\><C-N>")
+map({ 't' }, '<Esc><Esc>', '<C-\\><C-N>')
 
 map({ 'n' }, '<leader>bd', '<cmd>bd<cr>', { desc = 'Close Buffer' })
