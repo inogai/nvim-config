@@ -1,8 +1,6 @@
 ---@module 'snacks'
 
-vim.api.nvim_create_user_command('Dashboard', function()
-  Snacks.dashboard.open()
-end, {})
+vim.api.nvim_create_user_command('Dashboard', function() Snacks.dashboard.open() end, {})
 
 local hlgroups = {
   SnacksDashboardNormal = 'Normal', -- Normal for the dashboard
@@ -41,5 +39,8 @@ return {
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
+  },
+  keys = {
+    { '<leader>gl', function() Snacks.lazygit.open() end, desc = '[L]azygit' },
   },
 }
