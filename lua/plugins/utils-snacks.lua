@@ -31,7 +31,7 @@ return {
     -- refer to the configuration section below
     bigfile = { enabled = true },
     dashboard = require('plugins.utils-snacks.dashboard'),
-    indent = { enabled = true },
+    indent = { enabled = false },
     input = { enabled = true },
     picker = { enabled = true },
     notifier = { enabled = true },
@@ -85,5 +85,5 @@ return {
     { '<leader>ss', function() Snacks.picker.lsp_symbols() end, desc = 'LSP Symbols' },
 
     { '<leader>gl', function() Snacks.terminal('lazygit') end, desc = 'LSP Symbols' },
-  }
+  },
 }
