@@ -41,3 +41,4 @@ map({ "i", "x", "n", "s" }, "<F2>", vim.lsp.buf.rename, { desc = "Rename Symbol"
 
 map({ "t" }, "<Esc><Esc>", "<C-\\><C-N>")
 
+map({ 'n' }, '<leader>bd', '<cmd>bd<cr>', { desc = 'Close Buffer' })
