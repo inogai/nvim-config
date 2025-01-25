@@ -1,3 +1,21 @@
+local M = {}
+
+function M.stage_hunk() require('gitsigns').stage_hunk() end
+
+function M.stage_visual()
+  local first_line = vim.fn.line('v')
+  local last_line = vim.fn.line('.')
+  require('gitsigns').stage_hunk({ first_line, last_line })
+  print('Staged ' .. (last_line - first_line + 1) .. ' lines')
+end
+
+function M.reset_visual()
+  local first_line = vim.fn.line('v')
+  local last_line = vim.fn.line('.')
+  require('gitsigns').reset_hunk({ first_line, last_line })
+  print('Reset' .. (last_line - first_line + 1) .. ' lines')
+end
+
 return {
   {
     'lewis6991/gitsigns.nvim',
@@ -18,65 +36,16 @@ return {
         topdelete = { text = '' },
         changedelete = { text = '▎' },
       },
-      on_attach = function(buffer)
-        local gs = package.loaded.gitsigns
-
-        local function map(mode, l, r, desc)
-          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
-        end
-
-        map('n', ']h', function()
-          if vim.wo.diff then
-            vim.cmd.normal({ ']c', bang = true })
-          else
-            gs.nav_hunk('next')
-          end
-        end, 'Next Hunk')
-        map('n', '[h', function()
-          if vim.wo.diff then
-            vim.cmd.normal({ '[c', bang = true })
-          else
-            gs.nav_hunk('prev')
-          end
-        end, 'Prev Hunk')
-        map('n', ']H', function()
-          gs.nav_hunk('last')
-        end, 'Last Hunk')
-        map('n', '[H', function()
-          gs.nav_hunk('first')
-        end, 'First Hunk')
-        map({ 'n', 'v' }, '<leader>ghs', ':Gitsigns stage_hunk<CR>', 'Stage Hunk')
-        map({ 'n', 'v' }, '<leader>ghr', ':Gitsigns reset_hunk<CR>', 'Reset Hunk')
-        map('n', '<leader>ghS', gs.stage_buffer, 'Stage Buffer')
-        map('n', '<leader>ghu', gs.undo_stage_hunk, 'Undo Stage Hunk')
-        map('n', '<leader>ghR', gs.reset_buffer, 'Reset Buffer')
-        map('n', '<leader>ghp', gs.preview_hunk_inline, 'Preview Hunk Inline')
-        map('n', '<leader>ghb', function()
-          gs.blame_line({ full = true })
-        end, 'Blame Line')
-        map('n', '<leader>ghB', function()
-          gs.blame()
-        end, 'Blame Buffer')
-        map('n', '<leader>ghd', gs.diffthis, 'Diff This')
-        map('n', '<leader>ghD', function()
-          gs.diffthis('~')
-        end, 'Diff This ~')
-        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'GitSigns Select Hunk')
-      end,
     },
-  },
-  {
-    'gitsigns.nvim',
-    opts = function()
-      Snacks.toggle({
-        name = 'Git Signs',
-        get = function()
-          return require('gitsigns.config').config.signcolumn
-        end,
-        set = function(state)
-          require('gitsigns').toggle_signs(state)
-        end,
-      }):map('<leader>uG')
-    end,
+    keys = {
+      { ']h', function() require('gitsigns').nav_hunk('next') end, desc = 'Next Hunk' },
+      { '[h', function() require('gitsigns').nav_hunk('prev') end, desc = 'Prev Hunk' },
+      { 'gh', M.stage_visual, desc = 'Stage Line' },
+      { 'gh', M.stage_visual, desc = 'Stage Visual', mode = 'v' },
+      { 'gH', M.reset_visual, desc = 'Reset Line' },
+      { 'gH', M.reset_visual, desc = 'Reset Visual', mode = 'v' },
+      { 'gp', function() require('gitsigns').preview_hunk() end, desc = 'Preview Hunk' },
+      { 'go', function() require('gitsigns').preview_hunk_inline() end, desc = 'Preview Hunk Inline' },
+    },
   },
 }
