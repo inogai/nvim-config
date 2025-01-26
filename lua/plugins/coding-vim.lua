@@ -1,15 +1,20 @@
 return {
   {
     'echasnovski/mini.ai',
+    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = {
       n_lines = 500,
     },
   },
 
-  { 'cohama/lexima.vim' },
+  {
+    'cohama/lexima.vim',
+    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
+  },
 
   {
     'echasnovski/mini.surround',
+    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = {
       mappings = {
         add = 'sa', -- Add surrounding in Normal and Visual modes
