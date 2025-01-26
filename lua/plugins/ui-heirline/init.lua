@@ -65,26 +65,34 @@ function M.setup_colors()
   return ret
 end
 
+---@param name string
+function M.load_component(name)
+  ---@type Heir2.ComponentSpec
+  local spec = require('plugins.ui-heirline.components-2.' .. name)
+
+  if spec.plugins then
+    vim.list_extend(M.plugins, spec.plugins)
+  end
+
+  return spec.component
+end
+
+---@type LazyPluginSpec[]
+M.plugins = {}
+
+local Navic = M.load_component('navic')
+
 return {
+  unpack(M.plugins),
   {
     'skwee357/nvim-prose',
+    lazy = true,
     opts = {
       placeholders = {
         words = '',
         minutes = '',
       },
     },
-  },
-  {
-    'SmiteshP/nvim-navic',
-    opts = function(_, opts)
-      opts.lazy_update_context = false
-      return opts
-    end,
-  },
-  {
-    'nvim-lualine/lualine.nvim',
-    enabled = false,
   },
   {
     'rebelot/heirline.nvim',
@@ -133,7 +141,7 @@ return {
 
       local Winbar = {
         sp(7),
-        h('Navic'),
+        Navic(),
       }
 
       local opts = {
