@@ -41,12 +41,10 @@ map({ 'i', 'x', 'n', 's' }, '<F2>', vim.lsp.buf.rename, { desc = 'Rename Symbol'
 
 map({ 't' }, '<Esc><Esc>', '<C-\\><C-N>')
 
-map({ 'n' }, '<leader>bd', '<cmd>bd<cr>', { desc = 'Close Buffer' })
-
----@module 'lazy'
 ---@type LazyKeysSpec[]
 local keys = {
   { '<leader>l', '<cmd>Lazy<cr>', desc = 'Lazy' },
+  { '<leader>bd', function() Snacks.bufdelete() end, desc = '[B]uffer [D]elete' },
 }
 
 for _, spec in ipairs(keys) do
