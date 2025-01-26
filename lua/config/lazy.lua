@@ -5,6 +5,7 @@ vim.api.nvim_create_autocmd('User', {
   callback = function(ev)
     require('config.keymaps')
     require('config.autocmds')
+    _G.Utils = require('utils')
   end,
 })
 
