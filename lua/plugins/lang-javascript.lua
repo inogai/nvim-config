@@ -1,11 +1,3 @@
-Utils.lsp_on_attach(function(client)
-  if client.name == 'eslint' then
-    client.server_capabilities.documentFormattingProvider = true
-  elseif client.name == 'vtsls' or client.name == 'volar' or client.name == 'jsonls' then
-    client.server_capabilities.documentFormattingProvider = false
-  end
-end)
-
 return {
   {
     'neovim/nvim-lspconfig',
@@ -72,6 +64,17 @@ return {
             'postcss',
           },
         },
+      },
+      on_setup = {
+        eslint = function(_, opts)
+          Utils.lsp_on_attach(function(client)
+            if client.name == 'eslint' then
+              client.server_capabilities.documentFormattingProvider = true
+            elseif client.name == 'vtsls' or client.name == 'volar' or client.name == 'jsonls' then
+              client.server_capabilities.documentFormattingProvider = false
+            end
+          end)
+        end,
       },
     },
   },

@@ -104,6 +104,8 @@ return {
       vim.list_extend(ensure_installed, opts.ensure_installed or {})
       require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
+      local on_setup = opts.on_setup or {}
+
       require('mason-lspconfig').setup({
         ensure_installed = {},
         automatic_installation = false,
@@ -111,6 +113,10 @@ return {
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, default_capabilities, server.capabilities or {})
+
+            if on_setup[server_name] then
+              on_setup[server_name](server, opts)
+            end
             require('lspconfig')[server_name].setup(server)
           end,
         },
