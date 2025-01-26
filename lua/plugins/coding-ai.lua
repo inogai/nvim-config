@@ -13,6 +13,7 @@ return {
   },
   {
     'zbirenbaum/copilot-cmp',
+    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = {},
     config = function(_, opts)
       local copilot_cmp = require('copilot_cmp')
@@ -46,8 +47,7 @@ return {
   },
   {
     'yetone/avante.nvim',
-    event = 'VeryLazy',
-    lazy = false,
+    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     ---@type avante.Config
     opts = {
