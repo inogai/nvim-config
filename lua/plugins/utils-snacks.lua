@@ -16,10 +16,6 @@ local hlgroups = {
   SnacksDashboardTitle = 'Title', -- Title text
 }
 
-for hlgroup, target in pairs(hlgroups) do
-  vim.api.nvim_set_hl(0, hlgroup, { link = target })
-end
-
 return {
   'folke/snacks.nvim',
   priority = 1000,
@@ -44,4 +40,10 @@ return {
     { '<leader>gl', function() Snacks.lazygit.open() end, desc = '[L]azygit' },
     { '<C-/>', function() Snacks.terminal.toggle() end, desc = 'Terminal', mode = { 'n', 'i', 't' } },
   },
+  config = function(_, opts)
+    require('snacks').setup(opts)
+    for hlgroup, target in pairs(hlgroups) do
+      vim.api.nvim_set_hl(0, hlgroup, { link = target })
+    end
+  end,
 }
