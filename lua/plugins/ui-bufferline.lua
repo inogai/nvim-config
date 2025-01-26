@@ -16,30 +16,21 @@ return {
     },
     opts = {
       options = {
-      -- stylua: ignore
-      close_command = function(n) Snacks.bufdelete(n) end,
-      -- stylua: ignore
-      right_mouse_command = function(n) Snacks.bufdelete(n) end,
+        buffer_close_icon = '󰅖',
+        modified_icon = '● ',
+        close_icon = ' ',
+        left_trunc_marker = ' ',
+        right_trunc_marker = ' ',
+        close_command = function(n) Snacks.bufdelete(n) end,
+        right_mouse_command = function(n) Snacks.bufdelete(n) end,
         diagnostics = 'nvim_lsp',
         always_show_bufferline = true,
-        -- diagnostics_indicator = function(_, _, diag)
-        --   local icons = LazyVim.config.icons.diagnostics
-        --   local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-        --     .. (diag.warning and icons.Warn .. diag.warning or "")
-        --   return vim.trim(ret)
-        -- end,
-        -- offsets = {
-        --   {
-        --     filetype = 'neo-tree',
-        --     text = 'Neo-tree',
-        --     highlight = 'Directory',
-        --     text_align = 'left',
-        --   },
-        -- },
-        ---@param opts bufferline.IconFetcherOpts
-        -- get_element_icon = function(opts)
-        --   return LazyVim.config.icons.ft[opts.filetype]
-        -- end,
+        diagnostics_indicator = function(_, _, diag)
+          local icons = require('config.icons').diagnostics
+          local ret = (diag.error and icons.Error .. diag.error .. ' ' or '') .. (diag.warning and icons.Warn .. diag.warning or '')
+          return vim.trim(ret)
+        end,
+        get_element_icon = function(opts) return require('mini.icons').get('filetype', opts.filetype) end,
       },
     },
     config = function(_, opts)
