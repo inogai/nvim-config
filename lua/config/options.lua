@@ -71,3 +71,5 @@ vim.opt.scrolloff = 10
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
+
+vim.opt.laststatus = 3
