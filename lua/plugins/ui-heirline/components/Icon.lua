@@ -10,8 +10,10 @@ local Icon = {
       self._icon_color = 'fg3'
     else
       local filename = vim.fn.expand('%:t')
-      local ext = vim.fn.expand('%:e')
-      self._icon_str, self._icon_color = require('nvim-web-devicons').get_icon_color(filename, ext, { default = true })
+      local icon, hl, is_default = require('mini.icons').get('file', filename)
+
+      self._icon_str = icon
+      self._icon_color = vim.api.nvim_get_hl(0, { name = hl, link = false }).fg
     end
   end,
 
