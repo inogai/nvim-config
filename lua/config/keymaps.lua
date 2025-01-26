@@ -45,6 +45,26 @@ map({ 't' }, '<Esc><Esc>', '<C-\\><C-N>')
 local keys = {
   { '<leader>l', '<cmd>Lazy<cr>', desc = 'Lazy' },
   { '<leader>bd', function() Snacks.bufdelete() end, desc = '[B]uffer [D]elete' },
+  {
+    ']d',
+    function() vim.diagnostic.jump({ count = 1, float = true }) end,
+    desc = 'Next [D]iagnostic',
+  },
+  {
+    '[d',
+    function() vim.diagnostic.jump({ count = -1, float = true }) end,
+    desc = 'Prev [D]iagnostic',
+  },
+  {
+    ']e',
+    function() vim.diagnostic.jump({ count = 1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
+    desc = 'Next [D]iagnostic',
+  },
+  {
+    '[e',
+    function() vim.diagnostic.jump({ count = -1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
+    desc = 'Prev [D]iagnostic',
+  },
 }
 
 for _, spec in ipairs(keys) do
