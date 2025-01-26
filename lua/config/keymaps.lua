@@ -42,3 +42,14 @@ map({ 'i', 'x', 'n', 's' }, '<F2>', vim.lsp.buf.rename, { desc = 'Rename Symbol'
 map({ 't' }, '<Esc><Esc>', '<C-\\><C-N>')
 
 map({ 'n' }, '<leader>bd', '<cmd>bd<cr>', { desc = 'Close Buffer' })
+
+---@module 'lazy'
+---@type LazyKeysSpec[]
+local keys = {
+  { '<leader>l', '<cmd>Lazy<cr>', desc = 'Lazy' },
+}
+
+for _, spec in ipairs(keys) do
+  local mode = spec.mode or 'n'
+  vim.keymap.set(mode, spec[1], spec[2], { desc = spec.desc })
+end
