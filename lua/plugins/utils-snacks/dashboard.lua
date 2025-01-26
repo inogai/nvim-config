@@ -1,3 +1,7 @@
+---@module 'snacks'
+
+---@param cwd string
+---@return function
 local function pick_file(cwd)
   return function() Snacks.dashboard.pick('files', { cwd = cwd }) end
 end
