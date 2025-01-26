@@ -140,6 +140,16 @@ return {
       },
       { '<leader><space>', '<cmd>FzfLua files<cr>', desc = 'Find Files (Root Dir)' },
       -- goto
+      {
+        'gd',
+        function()
+          require('fzf-lua').lsp_definitions({
+            jump_to_single_result = true,
+            jump_on_cb = true,
+          })
+        end,
+        desc = '[D]efinitions',
+      },
       { 'gr', '<cmd>FzfLua lsp_reference<cr>', desc = '[R]erferences' },
       { 'gy', '<cmd>FzfLua lsp_typedefs<cr>', desc = 'T[y]pe Definition' },
       { 'ca', '<cmd>FzfLua lsp_code_actions<cr>', desc = '[C]ode [A]ctions' },
