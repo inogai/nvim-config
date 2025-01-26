@@ -4,6 +4,27 @@ local function pick_file(cwd)
   return function() Snacks.dashboard.pick('files', { cwd = cwd }) end
 end
 
+---@param dark  'light'| 'dark'
+local function asciiart(dark)
+  local script_path = vim.fn.stdpath('config') .. '/asciiart/'
+  local pattern = dark == 'light' and '_light.txt$' or '_dark.txt$'
+
+  local files = {}
+  for _, file in ipairs(vim.fn.readdir(script_path)) do
+    if file:match(pattern) then
+      vim.list_extend(files, { file })
+    end
+  end
+
+  if #files > 0 then
+    math.randomseed(os.time())
+    local random_file = files[math.random(#files)]
+    local file_path = script_path .. random_file
+
+    return file_path
+  end
+end
+
 ---@type snacks.dashboard.Config
 return {
   enabled = true,
@@ -65,7 +86,7 @@ return {
       pane = 1,
       {
         section = 'terminal',
-        cmd = vim.fn.stdpath('config') .. '/asciiart/random.sh ' .. vim.o.background,
+        cmd = 'cat ' .. asciiart(vim.opt.background),
         height = 18,
         width = 40,
         padding = 1,
