@@ -5,9 +5,10 @@ vim.api.nvim_create_autocmd('User', {
   callback = function(ev)
     require('config.keymaps')
     require('config.autocmds')
-    _G.Utils = require('utils')
   end,
 })
+
+_G.Utils = require('utils')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
