@@ -9,6 +9,9 @@ return {
     config = function() vim.cmd([[colorscheme moegi]]) end,
   },
   {
+    'folke/tokyonight.nvim',
+  },
+  {
     'ellisonleao/gruvbox.nvim',
   },
 }
