@@ -1,46 +1,5 @@
 -- stylua: ignore
-local icons = {
-  Array         = " ",
-  Boolean       = "󰨙 ",
-  Class         = " ",
-  Codeium       = "󰘦 ",
-  Color         = " ",
-  Control       = " ",
-  Collapsed     = " ",
-  Constant      = "󰏿 ",
-  Constructor   = " ",
-  Copilot       = " ",
-  Enum          = " ",
-  EnumMember    = " ",
-  Event         = " ",
-  Field         = " ",
-  File          = " ",
-  Folder        = " ",
-  Function      = "󰊕 ",
-  Interface     = " ",
-  Key           = " ",
-  Keyword       = " ",
-  Method        = "󰊕 ",
-  Module        = " ",
-  Namespace     = "󰦮 ",
-  Null          = " ",
-  Number        = "󰎠 ",
-  Object        = " ",
-  Operator      = " ",
-  Package       = " ",
-  Property      = " ",
-  Reference     = " ",
-  Snippet       = "󱄽 ",
-  String        = " ",
-  Struct        = "󰆼 ",
-  Supermaven    = " ",
-  TabNine       = "󰏚 ",
-  Text          = " ",
-  TypeParameter = " ",
-  Unit          = " ",
-  Value         = " ",
-  Variable      = "󰀫 ",
-}
+local kinds_icons = require('config.icons').kinds
 
 return {
   {
@@ -107,8 +66,8 @@ return {
         formatting = {
           format = function(entry, item)
             -- local icons = LazyVim.config.icons.kinds
-            if icons[item.kind] then
-              item.kind = icons[item.kind] .. item.kind
+            if kinds_icons[item.kind] then
+              item.kind = kinds_icons[item.kind] .. item.kind
             end
 
             local widths = {
