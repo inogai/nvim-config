@@ -47,9 +47,7 @@ return {
       -- Fix bufferline when restoring a session
       vim.api.nvim_create_autocmd({ 'BufAdd', 'BufDelete' }, {
         callback = function()
-          vim.schedule(function()
-            pcall(nvim_bufferline)
-          end)
+          vim.schedule(function() pcall(nvim_bufferline) end)
         end,
       })
     end,

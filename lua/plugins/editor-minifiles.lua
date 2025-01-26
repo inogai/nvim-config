@@ -10,9 +10,7 @@ function M.toggle(cwd)
   end
 end
 
-function M.toggle_at_root()
-  M.toggle(vim.fn.getcwd())
-end
+function M.toggle_at_root() M.toggle(vim.fn.getcwd()) end
 
 ---@type integer[]
 M.MF_BUFS = {}

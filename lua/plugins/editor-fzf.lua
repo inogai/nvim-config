@@ -120,12 +120,8 @@ return {
         },
         lsp = {
           symbols = {
-            symbol_hl = function(s)
-              return 'TroubleIcon' .. s
-            end,
-            symbol_fmt = function(s)
-              return s:lower() .. '\t'
-            end,
+            symbol_hl = function(s) return 'TroubleIcon' .. s end,
+            symbol_fmt = function(s) return s:lower() .. '\t' end,
             child_prefix = false,
           },
           code_actions = {
@@ -166,16 +162,12 @@ return {
       { '<leader>uC', '<cmd>FzfLua colorschemes<cr>', desc = 'Colorscheme with Preview' },
       {
         '<leader>ss',
-        function()
-          require('fzf-lua').lsp_document_symbols()
-        end,
+        function() require('fzf-lua').lsp_document_symbols() end,
         desc = 'Goto Symbol',
       },
       {
         '<leader>sS',
-        function()
-          require('fzf-lua').lsp_live_workspace_symbols()
-        end,
+        function() require('fzf-lua').lsp_live_workspace_symbols() end,
         desc = 'Goto Symbol (Workspace)',
       },
     },

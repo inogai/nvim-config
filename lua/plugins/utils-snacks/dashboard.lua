@@ -1,7 +1,5 @@
 local function pick_file(cwd)
-  return function()
-    Snacks.dashboard.pick('files', { cwd = cwd })
-  end
+  return function() Snacks.dashboard.pick('files', { cwd = cwd }) end
 end
 
 ---@type snacks.dashboard.Config
