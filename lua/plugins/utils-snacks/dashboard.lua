@@ -1,5 +1,3 @@
----@module 'snacks'
-
 ---@param cwd string
 ---@return function
 local function pick_file(cwd)
