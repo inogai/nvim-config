@@ -4,68 +4,61 @@ local nsMiniFiles = vim.api.nvim_create_namespace('mini_files_git')
 local autocmd = vim.api.nvim_create_autocmd
 local _, MiniFiles = pcall(require, 'mini.files')
 
-local get_cwd = function() return MiniFiles.get_latest_path() end
-
 -- Cache for git status
 local gitStatusCache = {}
 local cacheTimeout = 2000 -- Cache timeout in milliseconds
 
+---@type table<string, {symbol: string, hlGroup: string}>
+---@param status string
+---@return string symbol, string hlGroup
 local function mapSymbols(status)
   local statusMap = {
-    [' M'] = { symbol = '•', hlGroup = 'MiniDiffSignChange' }, -- Modified in the working directory
-    ['M '] = { symbol = '✹', hlGroup = 'MiniDiffSignChange' }, -- modified in index
-    ['MM'] = { symbol = '≠', hlGroup = 'MiniDiffSignChange' }, -- modified in both working tree and index
-    ['A '] = { symbol = '+', hlGroup = 'MiniDiffSignAdd' }, -- Added to the staging area, new file
-    ['AA'] = { symbol = '≈', hlGroup = 'MiniDiffSignAdd' }, -- file is added in both working tree and index
-    ['D '] = { symbol = '-', hlGroup = 'MiniDiffSignDelete' }, -- Deleted from the staging area
-    ['AM'] = { symbol = '⊕', hlGroup = 'MiniDiffSignChange' }, -- added in working tree, modified in index
-    ['AD'] = { symbol = '-•', hlGroup = 'MiniDiffSignChange' }, -- Added in the index and deleted in the working directory
-    ['R '] = { symbol = '→', hlGroup = 'MiniDiffSignChange' }, -- Renamed in the index
-    ['U '] = { symbol = '‖', hlGroup = 'MiniDiffSignChange' }, -- Unmerged path
-    ['UU'] = { symbol = '⇄', hlGroup = 'MiniDiffSignAdd' }, -- file is unmerged
-    ['UA'] = { symbol = '⊕', hlGroup = 'MiniDiffSignAdd' }, -- file is unmerged and added in working tree
-    ['??'] = { symbol = '?', hlGroup = 'MiniDiffSignDelete' }, -- Untracked files
-    ['!!'] = { symbol = '!', hlGroup = 'MiniDiffSignChange' }, -- Ignored files
+    -- stylua: ignore start 
+    [" M"] = { symbol = "•", hlGroup  = "GitSignsChange"}, -- Modified in the working directory
+    ["M "] = { symbol = "✹", hlGroup  = "GitSignsChange"}, -- modified in index
+    ["MM"] = { symbol = "≠", hlGroup  = "GitSignsChange"}, -- modified in both working tree and index
+    ["A "] = { symbol = "+", hlGroup  = "GitSignsAdd"   }, -- Added to the staging area, new file
+    ["AA"] = { symbol = "≈", hlGroup  = "GitSignsAdd"   }, -- file is added in both working tree and index
+    ["D "] = { symbol = "-", hlGroup  = "GitSignsDelete"}, -- Deleted from the staging area
+    ["AM"] = { symbol = "⊕", hlGroup  = "GitSignsChange"}, -- added in working tree, modified in index
+    ["AD"] = { symbol = "-•", hlGroup = "GitSignsChange"}, -- Added in the index and deleted in the working directory
+    ["R "] = { symbol = "→", hlGroup  = "GitSignsChange"}, -- Renamed in the index
+    ["U "] = { symbol = "‖", hlGroup  = "GitSignsChange"}, -- Unmerged path
+    ["UU"] = { symbol = "⇄", hlGroup  = "GitSignsAdd"   }, -- file is unmerged
+    ["UA"] = { symbol = "⊕", hlGroup  = "GitSignsAdd"   }, -- file is unmerged and added in working tree
+    ["??"] = { symbol = "?", hlGroup  = "GitSignsDelete"}, -- Untracked files
+    ["!!"] = { symbol = "!", hlGroup  = "GitSignsChange"}, -- Ignored files
+    -- stylua: ignore end
   }
 
   local result = statusMap[status] or { symbol = '?', hlGroup = 'NonText' }
   return result.symbol, result.hlGroup
 end
 
+---@param cwd string
+---@param callback function
+---@return nil
 local function fetchGitStatus(cwd, callback)
-  local stdout = (vim.uv or vim.loop).new_pipe(false)
-  local handle, pid
-  handle, pid = (vim.uv or vim.loop).spawn(
-    'git',
-    {
-      args = { 'status', '--ignored', '--porcelain' },
-      cwd = cwd,
-      stdio = { nil, stdout, nil },
-    },
-    vim.schedule_wrap(function(code, signal)
-      if code == 0 then
-        stdout:read_start(function(err, content)
-          if content then
-            callback(content)
-            vim.g.content = content
-          end
-          stdout:close()
-        end)
-      else
-        vim.notify('Git command failed with exit code: ' .. code, vim.log.levels.ERROR)
-        stdout:close()
-      end
-    end)
-  )
+  local function on_exit(content)
+    if content.code == 0 then
+      callback(content.stdout)
+      vim.g.content = content.stdout
+    end
+  end
+  vim.system({ 'git', 'status', '--ignored', '--porcelain' }, { text = true, cwd = cwd }, on_exit)
 end
 
+---@param str string?
 local function escapePattern(str) return str:gsub('([%^%$%(%)%%%.%[%]%*%+%-%?])', '%%%1') end
 
+---@param buf_id integer
+---@param gitStatusMap table
+---@return nil
 local function updateMiniWithGit(buf_id, gitStatusMap)
   vim.schedule(function()
     local nlines = vim.api.nvim_buf_line_count(buf_id)
-    local git_root = vim.fs.root(get_cwd(), '.git')
-    local escapedcwd = escapePattern(git_root)
+    local cwd = vim.fs.root(buf_id, '.git')
+    local escapedcwd = escapePattern(cwd)
     if vim.fn.has('win32') == 1 then
       escapedcwd = escapedcwd:gsub('\\', '/')
     end
@@ -95,14 +88,9 @@ local function updateMiniWithGit(buf_id, gitStatusMap)
   end)
 end
 
-local function is_valid_git_repo()
-  if vim.fn.isdirectory(get_cwd() .. '/.git') == 0 then
-    return false
-  end
-  return true
-end
-
 -- Thanks for the idea of gettings https://github.com/refractalize/oil-git-status.nvim signs for dirs
+---@param content string
+---@return table
 local function parseGitStatus(content)
   local gitStatusMap = {}
   -- lua match is faster than vim.split (in my experience )
@@ -136,11 +124,14 @@ local function parseGitStatus(content)
   return gitStatusMap
 end
 
+---@param buf_id integer
+---@return nil
 local function updateGitStatus(buf_id)
-  if not is_valid_git_repo() then
+  if not vim.fs.root(vim.uv.cwd(), '.git') then
     return
   end
-  local cwd = get_cwd()
+
+  local cwd = vim.fn.expand('%:p:h')
   local currentTime = os.time()
   if gitStatusCache[cwd] and currentTime - gitStatusCache[cwd].time < cacheTimeout then
     updateMiniWithGit(buf_id, gitStatusCache[cwd].statusMap)
@@ -156,6 +147,7 @@ local function updateGitStatus(buf_id)
   end
 end
 
+---@return nil
 local function clearCache() gitStatusCache = {} end
 
 local function augroup(name) return vim.api.nvim_create_augroup('MiniFiles_' .. name, { clear = true }) end
@@ -181,7 +173,7 @@ autocmd('User', {
   pattern = 'MiniFilesBufferUpdate',
   callback = function(sii)
     local bufnr = sii.data.buf_id
-    local cwd = get_cwd()
+    local cwd = vim.fn.expand('%:p:h')
     if gitStatusCache[cwd] then
       updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap)
     end
