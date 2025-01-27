@@ -47,22 +47,26 @@ local keys = {
   { '<leader>bd', function() Snacks.bufdelete() end, desc = '[B]uffer [D]elete' },
   {
     ']d',
-    function() vim.diagnostic.jump({ count = 1, float = true }) end,
+    function() vim.diagnostic.goto_next() end,
+    -- function() vim.diagnostic.jump({ count = 1, float = true }) end,
     desc = 'Next [D]iagnostic',
   },
   {
     '[d',
-    function() vim.diagnostic.jump({ count = -1, float = true }) end,
+    function() vim.diagnostic.goto_prev() end,
+    -- function() vim.diagnostic.jump({ count = -1, float = true }) end,
     desc = 'Prev [D]iagnostic',
   },
   {
     ']e',
-    function() vim.diagnostic.jump({ count = 1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
+    function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end,
+    -- function() vim.diagnostic.jump({ count = 1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
     desc = 'Next [D]iagnostic',
   },
   {
     '[e',
-    function() vim.diagnostic.jump({ count = -1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
+    function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end,
+    -- function() vim.diagnostic.jump({ count = -1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
     desc = 'Prev [D]iagnostic',
   },
 }
