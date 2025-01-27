@@ -1,50 +1,24 @@
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
-local map = vim.keymap.set
-
-map({ 'i', 'x', 'n', 's' }, '<D-s>', '<cmd>w<cr><esc>', { desc = '[S]ave File' })
-map({ 'i', 'c' }, '<D-v>', '<C-r>+', { desc = 'Paste' })
-map({ 't' }, '<D-v>', '<C-\\><C-o>"+p', { desc = 'Paste' })
-
-map({ 'i', 'x', 'n', 's' }, '<F2>', vim.lsp.buf.rename, { desc = 'Rename Symbol' })
-
-map({ 't' }, '<Esc><Esc>', '<C-\\><C-N>')
-
 ---@type LazyKeysSpec[]
 local keys = {
-  { '<leader>l', '<cmd>Lazy<cr>', desc = 'Lazy' },
+  -- Editing
+  { '<D-v>', '"+p"', desc = 'Paste' },
+  { '<D-v>', '<C-r>+', desc = 'Paste', mode = { 'i', 'c' } },
+  { '<D-v>', '<C-\\><C-o>"+p"', desc = 'Paste', mode = 't' },
+  { '<Esc>', '<cmd>nohlsearch<CR>', desc = 'Clear search highlights' },
+
+  -- Window
+  { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Terminal Normal', mode = 't' },
+
+  -- Buffer
+  { '<D-s>', '<cmd>w<cr><esc>', desc = '[S]ave File', mode = { 'i', 'x', 'n', 's' } },
   { '<leader>bd', function() Snacks.bufdelete() end, desc = '[B]uffer [D]elete' },
+
+  -- Utils
+  { '<leader>l', '<cmd>Lazy<cr>', desc = 'Lazy' },
+
+  -- LSP
+  { '<F2>', vim.lsp.buf.rename, desc = 'Rename Symbol', mode = { 'i', 'x', 'n', 's' } },
+  { '<leader>q', vim.diagnostic.setloclist, desc = 'Open diagnostic [Q]uickfix list' },
   {
     ']d',
     function() vim.diagnostic.goto_next() end,
@@ -69,6 +43,12 @@ local keys = {
     -- function() vim.diagnostic.jump({ count = -1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
     desc = 'Prev [D]iagnostic',
   },
+
+  -- Window Navigation
+  { '<C-h>', '<C-w><C-h>', desc = 'Focus Left' },
+  { '<C-l>', '<C-w><C-l>', desc = 'Focus Right' },
+  { '<C-j>', '<C-w><C-j>', desc = 'Focus Down' },
+  { '<C-k>', '<C-w><C-k>', desc = 'Focus Up' },
 }
 
 for _, spec in ipairs(keys) do
