@@ -73,5 +73,10 @@ local keys = {
 
 for _, spec in ipairs(keys) do
   local mode = spec.mode or 'n'
-  vim.keymap.set(mode, spec[1], spec[2], { desc = spec.desc })
+  local lhs = spec[1]
+  if vim.fn.has('mac') ~= 1 then
+    -- Use cmd on mac otherwise ctrl
+    lhs = lhs:gsub('<D-', '<C-')
+  end
+  vim.keymap.set(mode, lhs, spec[2], { desc = spec.desc })
 end
