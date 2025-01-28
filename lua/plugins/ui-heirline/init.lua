@@ -1,11 +1,4 @@
----@class MyHeirline.Unit<Self>: { hl: HeirlineHighlight | fun(self: Self): HeirlineHighlight; provider: string | fun(self: Self): string; init: fun(self: Self) }
-
 local M = {}
-
---- @class ColorSpec
---- @field fg string
---- @field bg string
---- @field hl_group vim.api.keyset.get_hl_info
 
 --- @param name string
 function M.get_highlight(name)
@@ -77,7 +70,6 @@ function M.load_component(name)
   return spec.component
 end
 
----@type LazyPluginSpec[]
 M.plugins = {}
 
 local Navic = M.load_component('navic')
