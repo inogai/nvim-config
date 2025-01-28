@@ -19,8 +19,10 @@ return {
         lua_ls = {
           settings = {
             Lua = {
-              arrayIndex = 'Disable',
-              hint = { enable = true },
+              hint = {
+                arrayIndex = 'Disable',
+                enable = true,
+              },
             },
           },
         },
