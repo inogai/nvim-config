@@ -6,5 +6,12 @@ return {
     opts = { signs = false },
   },
 
-  { 'echasnovski/mini.icons', opts = {} },
+  {
+    'echasnovski/mini.icons',
+    opts = {
+      lsp = {
+        copilot = { glyph = ' ', hl = 'MiniIconsGrey' },
+      },
+    },
+  },
 }
