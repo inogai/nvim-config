@@ -27,11 +27,13 @@ return {
       end
     end,
   },
+
   {
     'windwp/nvim-ts-autotag',
     ft = { 'html', 'vue', 'svelte', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
     opts = {},
   },
+
   {
     'echasnovski/mini.ai',
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
@@ -40,10 +42,13 @@ return {
     },
   },
 
-  -- {
-  --   'cohama/lexima.vim',
-  --   event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
-  -- },
+  {
+    'echasnovski/mini.pairs',
+    event = { 'InsertEnter' },
+    opts = {
+      skip_unbalanced = true,
+    },
+  },
 
   {
     'echasnovski/mini.surround',
