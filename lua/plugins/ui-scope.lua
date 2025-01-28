@@ -24,6 +24,7 @@ end
 return {
   {
     'HiPhish/rainbow-delimiters.nvim',
+    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     main = 'rainbow-delimiters.setup',
     opts = function()
       vim.api.nvim_create_autocmd('ColorScheme', {
