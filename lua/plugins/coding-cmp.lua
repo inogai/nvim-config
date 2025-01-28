@@ -11,6 +11,37 @@ local kind_icon = {
   end,
 }
 
+---@class Node
+---@field extmark_id integer
+---@field text? string
+---@field tabstop? string
+
+---@param node Node
+---@return boolean
+local function node_is_tabstop(node) return node.tabstop ~= nil end
+
+---@param node Node
+---@return boolean
+local function node_under_cursor(node)
+  local current_buf = 0
+  local ns_id = vim.api.nvim_create_namespace('MiniSnippetsNodes')
+
+  local extmark = vim.api.nvim_buf_get_extmark_by_id(current_buf, ns_id, node.extmark_id, {})
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  cursor[1] = cursor[1] - 1 -- cursor is 1-based, but extmark is 0-based
+
+  local offset = 0
+  if node.text ~= nil then
+    offset = #node.text
+  end
+
+  if cursor[1] == extmark[1] and cursor[2] >= extmark[2] and cursor[2] <= extmark[2] + offset then
+    return true
+  end
+
+  return false
+end
+
 return {
   {
     'echasnovski/mini.snippets',
@@ -51,10 +82,25 @@ return {
         ['<Esc>'] = {
           function()
             local ms = require('mini.snippets')
-            if ms.session.get() ~= nil then
-              ms.session.stop()
+            local session = ms.session.get()
+            if session == nil then
+              -- Case 1:  No session. Exit insert mode.
+            elseif
+              R.any(
+                session.nodes,
+                ---@param node Node
+                function(node) return node_is_tabstop(node) and node_under_cursor(node) end
+              )
+            then
+              -- Case 2:  Session exists, and cursor under node.
+              --          if cmp menu exists,  close it,
+              --          otherwise,           Exit insert mode.
+              return require('blink.cmp').hide()
+            else
+              -- Case 3:  Session exists, and cursor not under node.
+              --          Stop the session and exit insert mode.
+              vim.schedule(function() ms.session.stop() end)
             end
-            return require('blink.cmp').hide()
           end,
           'fallback',
         },
