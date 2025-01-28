@@ -51,6 +51,8 @@ local keys = {
   { '<C-l>', '<C-w><C-l>', desc = 'Focus Right' },
   { '<C-j>', '<C-w><C-j>', desc = 'Focus Down' },
   { '<C-k>', '<C-w><C-k>', desc = 'Focus Up' },
+
+  { '<leader>ui', '<Cmd>Inspect<CR>', desc = 'Inspect' },
 }
 
 for _, spec in ipairs(keys) do
