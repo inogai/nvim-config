@@ -7,6 +7,7 @@ return {
     },
     priority = 1001,
     config = function() vim.cmd([[colorscheme moegi]]) end,
+    dev = true,
   },
   {
     'folke/tokyonight.nvim',
