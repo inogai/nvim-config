@@ -73,3 +73,5 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
 vim.opt.laststatus = 3
+
+vim.lsp.inlay_hint.enable(true)

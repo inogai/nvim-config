@@ -64,3 +64,41 @@ for _, spec in ipairs(keys) do
   end
   vim.keymap.set(mode, lhs, spec[2], { desc = spec.desc })
 end
+
+local function toggle_g(var, name, default)
+  default = default or false
+  vim.g[var] = vim.g[var] or false
+  return Snacks.toggle({
+    name = name,
+    set = function(val) vim.g[var] = val end,
+    get = function() return vim.g[var] or false end,
+  })
+end
+
+local function toggle_b(var, name, default)
+  default = default or false
+
+  vim.api.nvim_create_augroup('toggle_b', { clear = false })
+  vim.api.nvim_create_autocmd('BufAdd', {
+    callback = function() vim.b[var] = vim.b[var] or default end,
+    group = 'toggle_b',
+  })
+
+  return Snacks.toggle({
+    name = name,
+    set = function(val) vim.b[var] = val end,
+    get = function()
+      local val = vim.b[var]
+      if val == nil then
+        return default
+      end
+      return val
+    end,
+  })
+end
+
+toggle_b('inogai__autoformat', '[F]ormat (Buffer)'):map('<leader>uF')
+toggle_g('inogai__autoformat', '[F]ormat (Global)'):map('<leader>uf')
+Snacks.toggle.option('wrap', { name = 'Wrap' }):map('<leader>uw')
+Snacks.toggle.inlay_hints():map('<leader>uh')
+Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }):map('<leader>ub')
