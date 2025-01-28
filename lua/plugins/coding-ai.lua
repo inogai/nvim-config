@@ -12,40 +12,6 @@ return {
     },
   },
   {
-    'zbirenbaum/copilot-cmp',
-    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
-    opts = {},
-    config = function(_, opts)
-      local copilot_cmp = require('copilot_cmp')
-      copilot_cmp.setup(opts)
-      -- attach cmp source whenever copilot attaches
-      -- fixes lazy-loading issues with the copilot cmp source
-      vim.api.nvim_create_autocmd('LspAttach', {
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client and (client.name == 'copilot') then
-            copilot_cmp._on_insert_enter({})
-          end
-        end,
-      })
-    end,
-    specs = {
-      {
-        'hrsh7th/nvim-cmp',
-        optional = true,
-        ---@param opts cmp.ConfigSchema
-        opts = function(_, opts)
-          table.insert(opts.sources or {}, 1, {
-            name = 'copilot',
-            group_index = 1,
-            priority = 100,
-          })
-          return opts
-        end,
-      },
-    },
-  },
-  {
     'yetone/avante.nvim',
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.

@@ -26,6 +26,10 @@ return {
     -- use a release tag to download pre-built binaries
     version = '*',
 
+    dependencies = {
+      'giuxtaposition/blink-cmp-copilot',
+    },
+
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
@@ -63,14 +67,9 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer' },
       },
     },
     opts_extend = { 'sources.default' },
-  },
-  {
-    'echasnovski/mini.snippets',
-    version = false,
-    opts = {},
   },
 }
