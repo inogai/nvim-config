@@ -21,7 +21,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
+---@type LazyConfig
+local opts = {
   spec = {
     -- import your plugins
     { import = 'plugins' },
@@ -40,4 +41,6 @@ require('lazy').setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-})
+}
+
+require('lazy').setup(opts)
