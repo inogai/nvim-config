@@ -15,7 +15,16 @@ return {
         'stylua',
         'lua_ls',
       },
-      servers = {},
+      servers = {
+        lua_ls = {
+          settings = {
+            Lua = {
+              arrayIndex = 'Disable',
+              hint = { enable = true },
+            },
+          },
+        },
+      },
     },
     opts_extends = { 'ensure_installed' },
     config = function(_, opts)
