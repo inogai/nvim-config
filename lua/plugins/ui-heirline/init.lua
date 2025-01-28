@@ -100,6 +100,8 @@ return {
       local utils = require('heirline.utils')
       local conditions = require('heirline.conditions')
 
+      local S = require('plugins.ui-heirline.components-2.simple')
+
       utils.on_colorscheme(M.setup_colors)
 
       vim.api.nvim_create_augroup('Heirline', { clear = true })
@@ -118,29 +120,29 @@ return {
       ---@param component string
       local function h(component) return require('plugins.ui-heirline.components.' .. component) end
 
-      local Align = { provider = '%=' }
-      ---@param count number
-      local sp = function(count) return { provider = (' '):rep(count) } end
-      local s = sp(1)
-
       local StatusLine = {
         h('Mode'),
-        s,
-        h('Icon'),
-        h('Modified'),
+        S.Hspace(1),
+
+        S.FileIcon(),
+        S.FileFlags(),
         h('Filename'),
-        s,
+        S.Hspace(1),
+
         h('Diagnostics'),
 
-        Align,
+        S.Hspace('grow'),
+
+        S.FileFormat(),
 
         h('Prose'),
-        s,
-        h('Ruler'),
+        S.Hspace(1),
+
+        S.Ruler(),
       }
 
       local Winbar = {
-        sp(7),
+        S.Hspace(7),
         Navic(),
       }
 
