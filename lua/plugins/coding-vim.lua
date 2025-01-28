@@ -1,4 +1,6 @@
 return {
+  { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
+
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
     event = 'VeryLazy',
