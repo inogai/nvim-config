@@ -43,6 +43,8 @@ return {
         end
       end
 
+      vim.api.nvim_create_user_command('Zi', fzf.zoxide, {})
+
       return {
         'default-title',
         fzf_colors = true,
