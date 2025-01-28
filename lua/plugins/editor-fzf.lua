@@ -150,7 +150,7 @@ return {
         end,
         desc = '[D]efinitions',
       },
-      { 'gr', '<cmd>FzfLua lsp_reference<cr>', desc = '[R]erferences' },
+      { 'gr', '<cmd>FzfLua lsp_references<cr>', desc = '[R]erferences' },
       { 'gy', '<cmd>FzfLua lsp_typedefs<cr>', desc = 'T[y]pe Definition' },
       { 'ca', '<cmd>FzfLua lsp_code_actions<cr>', desc = '[C]ode [A]ctions' },
       -- search
