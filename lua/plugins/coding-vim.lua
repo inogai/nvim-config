@@ -40,10 +40,10 @@ return {
     },
   },
 
-  {
-    'cohama/lexima.vim',
-    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
-  },
+  -- {
+  --   'cohama/lexima.vim',
+  --   event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
+  -- },
 
   {
     'echasnovski/mini.surround',
