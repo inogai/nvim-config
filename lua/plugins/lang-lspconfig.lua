@@ -9,31 +9,15 @@ return {
       { 'williamboman/mason.nvim', opts = {} },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- Allows extra capabilities provided by nvim-cmp
-      'hrsh7th/cmp-nvim-lsp',
     },
     opts = {
       ensure_installed = {
         'stylua',
+        'lua_ls',
       },
-      servers = {
-        lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-      },
+      servers = {},
     },
+    opts_extends = { 'ensure_installed' },
     config = function(_, opts)
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -83,12 +67,6 @@ return {
         vim.diagnostic.config({ signs = { text = diagnostic_signs } })
       end
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local default_capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
-
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -98,6 +76,9 @@ return {
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      --
+      local default_capabilities = require('blink.cmp').get_lsp_capabilities()
+      local disable_snippet_capabilities = { textDocument = { completion = { completionItem = { snippetSupport = false } } } }
       local servers = opts.servers or {}
 
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -112,7 +93,13 @@ return {
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend('force', {}, default_capabilities, server.capabilities or {})
+            server.capabilities = vim.tbl_deep_extend(
+              'force',
+              default_capabilities,
+              server.capabilities or {},
+              disable_snippet_capabilities
+              --
+            )
 
             if on_setup[server_name] then
               on_setup[server_name](server, opts)
