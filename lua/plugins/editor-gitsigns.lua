@@ -38,8 +38,8 @@ return {
       },
     },
     keys = {
-      { ']h', function() require('gitsigns').nav_hunk('next') end, desc = 'Next Hunk' },
-      { '[h', function() require('gitsigns').nav_hunk('prev') end, desc = 'Prev Hunk' },
+      { ']c', function() require('gitsigns').nav_hunk('next') end, desc = 'Next Hunk' },
+      { '[c', function() require('gitsigns').nav_hunk('prev') end, desc = 'Prev Hunk' },
       { 'gh', M.stage_visual, desc = 'Stage Line' },
       { 'gh', M.stage_visual, desc = 'Stage Visual', mode = 'v' },
       { 'gH', M.reset_visual, desc = 'Reset Line' },
