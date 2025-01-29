@@ -97,8 +97,14 @@ local function toggle_b(var, name, default)
   })
 end
 
-toggle_b('inogai__autoformat', '[F]ormat (Buffer)'):map('<leader>uF')
-toggle_g('inogai__autoformat', '[F]ormat (Global)'):map('<leader>uf')
-Snacks.toggle.option('wrap', { name = 'Wrap' }):map('<leader>uw')
-Snacks.toggle.inlay_hints():map('<leader>uh')
-Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }):map('<leader>ub')
+local toggle_keys = {
+  f = toggle_b('inogai__autoformat', '[F]ormat (Buffer)'),
+  F = toggle_g('inogai__autoformat', '[F]ormat (Global)'),
+  w = Snacks.toggle.option('wrap', { name = '[W]rap' }),
+  h = Snacks.toggle.inlay_hints({ name = '[H]ints' }),
+  b = Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark [B]ackground' }),
+}
+
+for key, toggle in pairs(toggle_keys) do
+  toggle:map('<leader>u' .. key)
+end
