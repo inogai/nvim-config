@@ -102,7 +102,16 @@ local toggle_keys = {
   F = toggle_g('inogai__autoformat', '[F]ormat (Global)'),
   w = Snacks.toggle.option('wrap', { name = '[W]rap' }),
   h = Snacks.toggle.inlay_hints({ name = '[H]ints' }),
-  b = Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark [B]ackground' }),
+  B = Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark [B]ackground' }),
+  b = Snacks.toggle({
+    name = '[B]lame Line',
+    set = function(val) require('gitsigns').toggle_current_line_blame(val) end,
+    get = function()
+      local blame = require('gitsigns').toggle_current_line_blame
+      blame()
+      return blame()
+    end,
+  }),
 }
 
 for key, toggle in pairs(toggle_keys) do
