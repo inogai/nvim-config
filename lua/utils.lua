@@ -14,4 +14,13 @@ function M.lsp_on_attach(on_attach, name)
   })
 end
 
+function M.expand_visual()
+  local start = vim.fn.getpos('v')
+  local finish = vim.fn.getpos('.')
+
+  local sel = vim.fn.getregion(start, finish)
+
+  return table.concat(sel, ' ')
+end
+
 return M
