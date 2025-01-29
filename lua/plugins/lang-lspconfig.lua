@@ -32,7 +32,7 @@ return {
         },
       },
     },
-    opts_extends = { 'ensure_installed' },
+    opts_extends = { 'ensure_installed', 'termux_no_install' },
     config = function(_, opts)
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
