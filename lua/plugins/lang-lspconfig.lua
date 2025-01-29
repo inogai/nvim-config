@@ -15,6 +15,10 @@ return {
         'stylua',
         'lua_ls',
       },
+      termux_no_install = {
+        'stylua',
+        'lua_ls',
+      },
       servers = {
         lua_ls = {
           settings = {
@@ -85,36 +89,39 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       --
       local default_capabilities = require('blink.cmp').get_lsp_capabilities()
-      local disable_snippet_capabilities = { textDocument = { completion = { completionItem = { snippetSupport = false } } } }
       local servers = opts.servers or {}
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, opts.ensure_installed or {})
+
+      if vim.fn.has('termux') then
+        ensure_installed = vim.tbl_filter(function(server) return not vim.tbl_contains(opts.termux_no_install or {}, server) end, ensure_installed)
+      end
+
       require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
       local on_setup = opts.on_setup or {}
 
-      require('mason-lspconfig').setup({
-        ensure_installed = {},
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend(
-              'force',
-              default_capabilities,
-              server.capabilities or {},
-              disable_snippet_capabilities
-              --
-            )
+      require('lspconfig').lua_ls.setup(opts.servers.lua_ls)
 
-            if on_setup[server_name] then
-              on_setup[server_name](server, opts)
-            end
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      })
+      local function setup(server_name)
+        local server = servers[server_name] or {}
+        server.capabilities = vim.tbl_deep_extend(
+          'force',
+          default_capabilities,
+          server.capabilities or {}
+          --
+        )
+
+        if on_setup[server_name] then
+          on_setup[server_name](server, opts)
+        end
+        require('lspconfig')[server_name].setup(server)
+      end
+
+      for server_name, _ in pairs(servers) do
+        setup(server_name)
+      end
     end,
   },
 }
