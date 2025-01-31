@@ -39,9 +39,52 @@ return {
   {
     'echasnovski/mini.ai',
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
-    opts = {
-      n_lines = 500,
-    },
+    opts = function()
+      local ai = require('mini.ai')
+      return {
+        n_lines = 500,
+        custom_textobjects = {
+          o = ai.gen_spec.treesitter({ -- code block
+            a = { '@block.outer', '@conditional.outer', '@loop.outer' },
+            i = { '@block.inner', '@conditional.inner', '@loop.inner' },
+          }),
+          f = ai.gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }), -- function
+          c = ai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }), -- class
+          u = ai.gen_spec.function_call(),
+          U = ai.gen_spec.function_call({ name_pattern = '[%w_]' }),
+        },
+      }
+    end,
+    config = function(_, opts)
+      require('mini.ai').setup(opts)
+      Utils.on_load('which-key.nvim', function()
+        local objects = {
+          o = 'code block',
+          f = 'function',
+          c = 'class',
+          u = 'function call',
+          U = 'method call',
+        }
+
+        local prefixs = {
+          around = 'a',
+          inside = 'i',
+        }
+
+        local ret = {
+          mode = { 'x' },
+        }
+
+        for _, prefix in pairs(prefixs) do
+          for key, desc in pairs(objects) do
+            ---@type wk.Spec
+            ret[#ret + 1] = { prefix .. key, desc = desc }
+          end
+        end
+
+        require('which-key').add(ret, { notify = false })
+      end)
+    end,
   },
 
   {
