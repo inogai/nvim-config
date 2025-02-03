@@ -21,7 +21,7 @@ return {
       provider = 'copilot',
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = vim.fn.has('unix') and 'make' or 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false',
+    build = vim.fn.has('unix') == 1 and 'make' or 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false',
     dependencies = {
       'stevearc/dressing.nvim',
       'nvim-lua/plenary.nvim',
