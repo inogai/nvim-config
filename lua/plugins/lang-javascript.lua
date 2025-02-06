@@ -1,5 +1,13 @@
 return {
   {
+    'nvim-treesitter/nvim-treesitter',
+    opts = {
+      ensure_installed = { 'jsdoc' },
+    },
+    opts_extend = { 'ensure_installed' },
+  },
+
+  {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
