@@ -14,6 +14,7 @@ return {
       ensure_installed = {
         'stylua',
         'lua_ls',
+        'json-lsp',
       },
       termux_no_install = {
         'stylua',
