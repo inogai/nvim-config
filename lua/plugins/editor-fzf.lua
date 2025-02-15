@@ -18,7 +18,7 @@ return {
       config.defaults.keymap.builtin['<c-b>'] = 'preview-page-up'
 
       -- Trouble
-      -- config.defaults.actions.files['ctrl-t'] = require('trouble.sources.fzf').actions.open
+      config.defaults.actions.files['ctrl-t'] = require('trouble.sources.fzf').actions.open
 
       -- Toggle root dir / cwd
       -- config.defaults.actions.files['ctrl-r'] = function(_, ctx)
