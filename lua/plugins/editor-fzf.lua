@@ -155,6 +155,7 @@ return {
       { 'gr', '<cmd>FzfLua lsp_references<cr>', desc = '[R]erferences' },
       { 'gy', '<cmd>FzfLua lsp_typedefs<cr>', desc = 'T[y]pe Definition' },
       { 'ca', '<cmd>FzfLua lsp_code_actions<cr>', desc = '[C]ode [A]ctions' },
+      { '<C-.>', '<cmd>FzfLua lsp_code_actions<cr>', desc = 'Code Actions', mode = { 'n', 'i', 's' } },
       -- search
       { '<leader>s"', '<cmd>FzfLua registers<cr>', desc = 'Registers' },
       { '<leader>sa', '<cmd>FzfLua autocmds<cr>', desc = 'Auto Commands' },
