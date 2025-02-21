@@ -18,6 +18,12 @@ return {
           filter = function(buf) return vim.bo[buf].buftype == 'help' end,
         },
       },
+      right = {
+        {
+          ft = 'iron',
+          size = { width = 0.5 },
+        },
+      },
     },
   },
 }
