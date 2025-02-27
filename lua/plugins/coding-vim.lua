@@ -52,6 +52,7 @@ return {
           c = ai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }), -- class
           u = ai.gen_spec.function_call(),
           U = ai.gen_spec.function_call({ name_pattern = '[%w_]' }),
+          x = function(opts) return require('notebook-navigator').miniai_spec(opts) end,
         },
       }
     end,
