@@ -45,7 +45,7 @@ end
 return {
   {
     'echasnovski/mini.snippets',
-    version = false,
+    version = '*',
     opts = {},
   },
 
@@ -55,7 +55,7 @@ return {
     -- optional: provides snippets for the snippet source
     -- dependencies = 'rafamadriz/friendly-snippets',
     -- use a release tag to download pre-built binaries
-    version = '*',
+    version = '0.12.*',
 
     dependencies = {
       'giuxtaposition/blink-cmp-copilot',
