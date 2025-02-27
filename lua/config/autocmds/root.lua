@@ -6,7 +6,7 @@ local root_names = { '.git' }
 -- Cache to use for speed up (at cost of possibly outdated results)
 local root_cache = {}
 
-local set_root = function()
+local cd_root = function()
   -- Get directory path to start search from
   local path = vim.api.nvim_buf_get_name(0)
   if path == '' then
@@ -29,5 +29,4 @@ local set_root = function()
   vim.fn.chdir(root)
 end
 
-local root_augroup = vim.api.nvim_create_augroup('MyAutoRoot', {})
-vim.api.nvim_create_autocmd('BufEnter', { group = root_augroup, callback = set_root })
+vim.api.nvim_create_user_command('CdRoot', cd_root, { nargs = 0 })

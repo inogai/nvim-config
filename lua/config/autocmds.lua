@@ -21,4 +21,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 --   end,
 -- })
 
--- require('config.autocmds.root')
+require('config.autocmds.root')
