@@ -20,7 +20,16 @@ return {
     'stevearc/conform.nvim',
     optional = true,
     opts = {
-      formatters_by_ft = { typst = { 'prettypst' } },
+      formatters = {
+        prettypst = {
+          prepend_args = { '--use-configuration' },
+        },
+      },
+      formatters_by_ft = {
+        typst = {
+          'prettypst',
+        },
+      },
     },
   },
 
