@@ -1,8 +1,18 @@
+-- local default_colors = {
+--   '#b5a165',
+--   '#528f77',
+--   '#8e7395',
+--   '#5a7aaa',
+-- }
+
 local default_colors = {
-  '#b5a165',
-  '#528f77',
-  '#8e7395',
-  '#5a7aaa',
+  '#b85e67', -- darker red (catppuccin-mocha)
+  '#b37e5c', -- darker peach (catppuccin-mocha)
+  '#b8a575', -- darker yellow (catppuccin-mocha)
+  '#75a26e', -- darker green (catppuccin-mocha)
+  '#679f97', -- darker teal (catppuccin-mocha)
+  '#6079aa', -- darker blue (catppuccin-mocha)
+  '#8f74af', -- darker mauve/purple (catppuccin-mocha)
 }
 
 local function prepare_hl_groups()
