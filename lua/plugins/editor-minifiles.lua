@@ -64,7 +64,7 @@ vim.api.nvim_create_autocmd('User', {
   pattern = 'MiniFilesBufferCreate',
   callback = function(args)
     table.insert(M.MF_BUFS, args.data.buf_id)
-    vim.keymap.set('n', '@', M.foucs_last_active_file_dir)
+    vim.keymap.set('n', '@', M.foucs_last_active_file_dir, { buffer = args.data.buf_id })
   end,
 })
 
