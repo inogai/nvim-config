@@ -55,7 +55,7 @@ return {
     -- optional: provides snippets for the snippet source
     -- dependencies = 'rafamadriz/friendly-snippets',
     -- use a release tag to download pre-built binaries
-    version = '0.12.*',
+    version = '0.14.*',
 
     dependencies = {
       'giuxtaposition/blink-cmp-copilot',
