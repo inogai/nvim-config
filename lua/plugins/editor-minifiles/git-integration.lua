@@ -131,7 +131,7 @@ local function updateGitStatus(buf_id)
     return
   end
 
-  local cwd = vim.fn.expand('%:p:h')
+  local cwd = vim.fn.expand('%:p'):gsub('^minifiles://%d+/', '')
   local currentTime = os.time()
   if gitStatusCache[cwd] and currentTime - gitStatusCache[cwd].time < cacheTimeout then
     updateMiniWithGit(buf_id, gitStatusCache[cwd].statusMap)
