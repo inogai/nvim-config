@@ -86,6 +86,12 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       --
       local default_capabilities = require('blink.cmp').get_lsp_capabilities()
+      -- ufo capabilities
+      default_capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      }
+      -- END ufo capabilities
       local servers = opts.servers or {}
 
       local ensure_installed = vim.tbl_keys(servers or {})
