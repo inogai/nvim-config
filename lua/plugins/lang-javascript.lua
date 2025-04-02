@@ -55,7 +55,7 @@ return {
               },
               preferences = {
                 importModuleSpecifier = 'non-relative',
-                importModuleSpecifierEnding = 'js',
+                -- importModuleSpecifierEnding = 'js',
               },
             },
           },
