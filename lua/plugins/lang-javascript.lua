@@ -1,3 +1,13 @@
+local filetypes = {
+  'javascript',
+  'javascriptreact',
+  'javascript.jsx',
+  'typescript',
+  'typescriptreact',
+  'typescript.tsx',
+  'vue',
+  'html',
+}
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -25,6 +35,17 @@ return {
   },
 
   {
+    'nabekou29/js-i18n.nvim',
+    ft = filetypes,
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-lua/plenary.nvim',
+    },
+    opts = {},
+  },
+
+  {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
@@ -48,7 +69,10 @@ return {
               inlayHints = {
                 enumMemberValues = { enabled = true },
                 functionLikeReturnTypes = { enabled = true },
-                parameterNames = { enabled = 'literals' },
+                parameterNames = {
+                  enabled = 'literals',
+                  suppressWhenArgumentMatchesName = 't',
+                },
                 parameterTypes = { enabled = true },
                 propertyDeclarationTypes = { enabled = true },
                 variableTypes = { enabled = false },
