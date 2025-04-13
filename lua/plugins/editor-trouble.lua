@@ -1,4 +1,33 @@
+local function enable_workspace_diagnostics()
+  for _, client in ipairs(vim.lsp.buf_get_clients()) do
+    require('workspace-diagnostics').populate_workspace_diagnostics(client, 0)
+  end
+  Utils.lsp_on_attach(function(client, buffer)
+    --
+    require('workspace-diagnostics').populate_workspace_diagnostics(client, 0)
+  end)
+end
+
+--- @param cmd string
+local function ws(cmd)
+  return function()
+    enable_workspace_diagnostics()
+    vim.cmd(cmd)
+  end
+end
+
+Utils.lsp_on_attach(
+  function(client, buffer)
+    vim.api.nvim_buf_create_user_command(buffer, 'WorkspaceDiagnostics', ws('Trouble diagnostics toggle'), { desc = 'Toggle Workspace Diagnostics' })
+  end,
+  { 'eslint' }
+)
+
 return {
+  {
+    'artemave/workspace-diagnostics.nvim',
+  },
+
   {
     'folke/trouble.nvim',
     lazy = true,
@@ -7,7 +36,7 @@ return {
     keys = {
       {
         '<leader>xx',
-        '<cmd>Trouble diagnostics toggle<cr>',
+        ws('Trouble diagnostics toggle'),
         desc = 'Diagnostics (Trouble)',
       },
       {
