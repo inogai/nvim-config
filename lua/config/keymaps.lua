@@ -112,6 +112,11 @@ local toggle_keys = {
       return blame()
     end,
   }),
+  c = Snacks.toggle({
+    name = '[C]oncealing',
+    set = function(val) vim.o.conceallevel = val and 2 or 0 end,
+    get = function() return vim.o.conceallevel == 2 end,
+  }),
 }
 
 for key, toggle in pairs(toggle_keys) do
