@@ -30,3 +30,9 @@ local cd_root = function()
 end
 
 vim.api.nvim_create_user_command('CdRoot', cd_root, { nargs = 0 })
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  desc = 'Change directory to root directory',
+  group = vim.api.nvim_create_augroup('user-cd-root', { clear = true }),
+  callback = function() cd_root() end,
+})
