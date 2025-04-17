@@ -319,6 +319,7 @@ return {
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = function()
       local hi = require('mini.hipatterns')
+      local nn = require('notebook-navigator')
       return {
         -- custom LazyVim option to enable the tailwind integration
         tailwind = {
@@ -342,6 +343,7 @@ return {
           style = 'full',
         },
         highlighters = {
+          notebook_cell = nn.minihipatterns_spec,
           hex_color = hi.gen_highlighter.hex_color({ priority = 2000 }),
           shorthand = {
             pattern = '()#%x%x%x()%f[^%x%w]',
