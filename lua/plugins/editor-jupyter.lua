@@ -32,6 +32,9 @@ return {
     ft = 'python',
     opts = {
       repl_provider = 'molten',
+      cell_markers = {
+        markdown = '```',
+      },
     },
     keys = {
       { ']x', function() require('notebook-navigator').move_cell('d') end, desc = 'Next Cell' },
