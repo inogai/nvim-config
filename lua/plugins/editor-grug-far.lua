@@ -3,14 +3,21 @@ local function grug_ft()
   local ext = vim.bo.buftype == '' and vim.fn.expand('%:e')
   local filesFilter = nil
 
-  if not ext or ext == '' then
-  elseif ext == 'js' or ext == 'ts' then
-    filesFilter = '*.(j|t)sx?,*.vue'
-  else
+  local ext_groups = {
+    { 'js', 'jsx', 'ts', 'tsx', 'vue', 'html', 'css' },
+  }
+
+  if ext ~= '' then
     filesFilter = '*.' .. ext
   end
 
-  grug.with_visual_selection({
+  for i, group in ipairs(ext_groups) do
+    if vim.tbl_contains(group, i) then
+      filesFilter = '*.{' .. vim.iter(group):join(', ') .. '}'
+    end
+  end
+
+  grug.open({
     transient = true,
     prefills = { filesFilter = filesFilter },
   })
@@ -18,7 +25,7 @@ end
 
 local function grug_file()
   local grug = require('grug-far')
-  grug.with_visual_selection({
+  grug.open({
     transient = true,
     prefills = { filesFilter = vim.fn.expand('%:t') },
   })
