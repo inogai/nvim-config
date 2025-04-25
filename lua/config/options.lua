@@ -79,3 +79,5 @@ vim.opt.splitkeep = 'screen'
 vim.lsp.inlay_hint.enable(true)
 
 vim.opt.conceallevel = 2
+
+vim.diagnostic.config({ virtual_text = true })
