@@ -50,6 +50,17 @@ return {
   },
 
   {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+      copilot_model = 'gpt-4o-copilot',
+    },
+  },
+
+  {
     'saghen/blink.cmp',
     lazy = false,
     -- optional: provides snippets for the snippet source

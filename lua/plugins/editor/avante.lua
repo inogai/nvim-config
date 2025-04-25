@@ -1,17 +1,6 @@
----@module 'cmp'
 ---@module 'avante'
 
 return {
-  {
-    'zbirenbaum/copilot.lua',
-    cmd = 'Copilot',
-    event = 'InsertEnter',
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-      copilot_model = 'gpt-4o-copilot',
-    },
-  },
   {
     'yetone/avante.nvim',
     event = 'VeryLazy',
