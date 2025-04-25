@@ -24,7 +24,7 @@ return {
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
     bigfile = { enabled = true },
-    dashboard = require('plugins.utils-snacks.dashboard'),
+    dashboard = require('lib.dashboard'),
     indent = { enabled = false },
     input = { enabled = true },
     picker = { enabled = false },
