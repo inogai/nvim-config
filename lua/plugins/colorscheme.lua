@@ -21,6 +21,22 @@ return {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1001,
-    config = function() vim.cmd([[colorscheme catppuccin]]) end,
+    opts = {
+      flavour = 'auto', -- latte, frappe, macchiato, mocha
+      background = { -- :h background
+        light = 'latte',
+        dark = 'mocha',
+      },
+      custom_highlights = function(C)
+        return {
+          -- ['@markup.strong'] = { fg = C.maroon },
+          ['@markup.italic'] = { fg = C.blue },
+        }
+      end,
+    },
+    config = function(_, opts)
+      require('catppuccin').setup(opts)
+      vim.cmd([[colorscheme catppuccin]])
+    end,
   },
 }
