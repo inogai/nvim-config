@@ -189,3 +189,5 @@ autocmd('User', {
     end
   end,
 })
+
+return {}

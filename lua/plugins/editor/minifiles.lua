@@ -92,10 +92,6 @@ return {
         use_as_default_explorer = true,
       },
     },
-    config = function(_, opts)
-      require('mini.files').setup(opts)
-      require('plugins.editor-minifiles.git-integration')
-    end,
     keys = {
       { '<leader>e', M.toggle_at_root, desc = 'Files' },
     },
