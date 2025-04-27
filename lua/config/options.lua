@@ -71,13 +71,10 @@ vim.opt.scrolloff = 10
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-
 vim.opt.laststatus = 3
-
 vim.opt.splitkeep = 'screen'
+vim.opt.conceallevel = 2
+vim.opt.wrap = false
 
 vim.lsp.inlay_hint.enable(true)
-
-vim.opt.conceallevel = 2
-
 vim.diagnostic.config({ virtual_text = true })
