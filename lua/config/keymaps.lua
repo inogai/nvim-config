@@ -2,10 +2,15 @@ vim.keymap.set('n', 's', '')
 
 ---@type LazyKeysSpec[]
 local keys = {
-  -- Editing
-  { '<D-v>', '"+p"', desc = 'Paste' },
+  -- Pasting
+  { '<D-v>', 'p', desc = 'Paste', mode = { 'n' } },
+  --  Visual: store replaced content in "_  instead of "+
+  { 'p', '"_dP', desc = 'Paste Over', mode = { 'v' } },
+  { '<D-v>', '"_dP', desc = 'Paste Over', mode = { 'v' } },
+
   { '<D-v>', '<C-r>+', desc = 'Paste', mode = { 'i', 'c' } },
-  { '<D-v>', '<C-\\><C-o>"+p"', desc = 'Paste', mode = 't' },
+  { '<D-v>', '<C-\\><C-o>"+p"', desc = 'Paste', mode = { 't' } },
+
   { '<Esc>', '<cmd>nohlsearch<CR>', desc = 'Clear search highlights' },
 
   -- Window
