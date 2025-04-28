@@ -12,6 +12,7 @@ local keys = {
   { '<D-v>', '<C-\\><C-o>"+p"', desc = 'Paste', mode = { 't' } },
 
   { '<Esc>', '<cmd>nohlsearch<CR>', desc = 'Clear search highlights' },
+  { 's', '', desc = '+Surround', mode = { 'n', 'v' } },
 
   -- Window
   { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Terminal Normal', mode = 't' },
