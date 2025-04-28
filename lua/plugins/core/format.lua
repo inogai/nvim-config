@@ -18,7 +18,7 @@ return {
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
         local lsp_format_opt
-        if vim.b.inogai__autoformat or vim.g.inogai__autoformat then
+        if vim.b.inogai__no_autoformat or vim.g.inogai__no_autoformat then
           lsp_format_opt = 'never'
         else
           lsp_format_opt = 'fallback'

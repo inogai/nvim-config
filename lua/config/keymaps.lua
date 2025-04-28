@@ -70,41 +70,59 @@ for _, spec in ipairs(keys) do
   vim.keymap.set(mode, lhs, spec[2], { desc = spec.desc })
 end
 
-local function toggle_g(var, name, default)
-  default = default or false
-  vim.g[var] = vim.g[var] or false
+---@class ToggleOpts
+---@field default? boolean
+---@field reversed? boolean
+
+---@param var string
+---@param name string
+---@param opts ToggleOpts
+local function toggle_g(var, name, opts)
+  if vim.g[var] == nil then
+    vim.g[var] = opts.default
+  end
+
+  local reversed = function(x) return x end
+  if opts.reversed then
+    reversed = function(x) return not x end
+  end
+
   return Snacks.toggle({
     name = name,
-    set = function(val) vim.g[var] = val end,
-    get = function() return vim.g[var] or false end,
+    set = function(val) vim.g[var] = reversed(val) end,
+    get = function() return reversed(vim.g[var]) end,
   })
 end
 
-local function toggle_b(var, name, default)
-  default = default or false
-
+---@param var string
+---@param name string
+---@param opts ToggleOpts
+local function toggle_b(var, name, opts)
   vim.api.nvim_create_augroup('toggle_b', { clear = false })
-  vim.api.nvim_create_autocmd('BufAdd', {
-    callback = function() vim.b[var] = vim.b[var] or default end,
+  vim.api.nvim_create_autocmd('BufEnter', {
+    callback = function()
+      if vim.b[var] == nil then
+        vim.b[var] = opts.default
+      end
+    end,
     group = 'toggle_b',
   })
 
+  local reversed = function(x) return x end
+  if opts.reversed then
+    reversed = function(x) return not x end
+  end
+
   return Snacks.toggle({
     name = name,
-    set = function(val) vim.b[var] = val end,
-    get = function()
-      local val = vim.b[var]
-      if val == nil then
-        return default
-      end
-      return val
-    end,
+    set = function(val) vim.b[var] = reversed(val) end,
+    get = function() return reversed(vim.b[var]) end,
   })
 end
 
 local toggle_keys = {
-  f = toggle_b('inogai__autoformat', '[F]ormat (Buffer)'),
-  F = toggle_g('inogai__autoformat', '[F]ormat (Global)'),
+  f = toggle_b('inogai__no_autoformat', '[F]ormat (Buffer)', { default = false, reversed = true }),
+  F = toggle_g('inogai__no_autoformat', '[F]ormat (Global)', { default = false, rreversed = true }),
   w = Snacks.toggle.option('wrap', { name = '[W]rap' }),
   h = Snacks.toggle.inlay_hints({ name = '[H]ints' }),
   B = Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark [B]ackground' }),
