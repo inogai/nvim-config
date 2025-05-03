@@ -73,19 +73,10 @@ end
 M.plugins = {}
 
 local Navic = M.load_component('navic')
+local WordCount = M.load_component('wordcount')
 
 return {
   unpack(M.plugins),
-  {
-    'skwee357/nvim-prose',
-    lazy = true,
-    opts = {
-      placeholders = {
-        words = '',
-        minutes = '',
-      },
-    },
-  },
   {
     'rebelot/heirline.nvim',
     opts = function()
@@ -127,7 +118,7 @@ return {
 
         S.FileFormat(),
 
-        h('Prose'),
+        WordCount(),
         S.Hspace(1),
 
         S.Ruler(),
