@@ -1,6 +1,4 @@
 return {
-  { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
-
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
     event = 'VeryLazy',
@@ -86,14 +84,6 @@ return {
         require('which-key').add(ret, { notify = false })
       end)
     end,
-  },
-
-  {
-    'echasnovski/mini.pairs',
-    event = { 'InsertEnter' },
-    opts = {
-      skip_unbalanced = true,
-    },
   },
 
   {
