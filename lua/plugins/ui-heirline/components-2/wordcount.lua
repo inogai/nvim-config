@@ -39,6 +39,7 @@ return {
       'markdown',
       'text',
       'norg',
+      'typst',
     }
 
     local template = {
