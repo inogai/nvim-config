@@ -6,21 +6,17 @@ return {
     event = 'VeryLazy',
     version = false, -- Never set this value to "*"! Never!
     ---@type avante.Config
+    ---@diagnostic disable-next-line: missing-fields
     opts = {
-      -- add any opts here
+      file_selector = 'fzf',
+
       provider = 'copilot',
       auto_suggestions_provider = 'copilot',
 
       copilot = {
-        model = 'claude-3.7-sonnet',
-        -- model = 'gpt-4o',
+        -- model = 'claude-3.7-sonnet',
+        model = 'gpt-4o',
       },
-
-      behaviour = {
-        -- enable_claude_text_editor_tool_mode = true,
-      },
-
-      file_selector = 'fzf',
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = vim.fn.has('unix') == 1 and 'make' or 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false',
