@@ -110,11 +110,11 @@ return {
     -- dependencies = 'rafamadriz/friendly-snippets',
     -- use a release tag to download pre-built binaries
     version = '0.14.*',
-
     dependencies = {
       'giuxtaposition/blink-cmp-copilot',
       'Kaiser-Yang/blink-cmp-avante',
     },
+    opts_extend = { 'sources.default' },
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -172,6 +172,5 @@ return {
         providers = providers,
       },
     },
-    opts_extend = { 'sources.default' },
   },
 }
