@@ -78,3 +78,5 @@ vim.opt.wrap = false
 
 vim.lsp.inlay_hint.enable(true)
 vim.diagnostic.config({ virtual_text = true })
+
+vim.g.python3_host_prog = vim.env.NVIM_PYTHON_HOST
