@@ -163,15 +163,22 @@ return {
             end
           end, { 'vtsls' })
         end,
-        eslint = function(_, opts)
-          Utils.lsp_on_attach(function(client)
-            if client.name == 'eslint' then
-              client.server_capabilities.documentFormattingProvider = true
-            elseif client.name == 'vtsls' or client.name == 'volar' or client.name == 'jsonls' then
-              client.server_capabilities.documentFormattingProvider = false
-            end
-          end)
-        end,
+      },
+    },
+  },
+
+  {
+    'stevearc/conform.nvim',
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        javascript = { 'eslint_d' },
+        javascriptreact = { 'eslint_d' },
+        typescript = { 'eslint_d' },
+        typescriptreact = { 'eslint_d' },
+        vue = { 'eslint_d' },
+        json = { 'eslint_d' },
+        yaml = { 'eslint_d' },
       },
     },
   },
