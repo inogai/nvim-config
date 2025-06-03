@@ -31,6 +31,8 @@ return {
         return {
           -- ['@markup.strong'] = { fg = C.maroon },
           ['@markup.italic'] = { fg = C.blue },
+          ['@custom.link.generic'] = { fg = C.sky, style = { 'underdotted' } },
+          ['@custom.strong.underdotted'] = { fg = C.maroon, style = { 'bold', 'underdotted' } },
         }
       end,
     },
