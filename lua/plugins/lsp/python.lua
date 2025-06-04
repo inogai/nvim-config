@@ -1,11 +1,11 @@
 return {
   {
     'neovim/nvim-lspconfig',
+    optional = true,
+    opts_extends = { 'ensure_installed' },
     opts = {
-      servers = {
-        basedpyright = {},
-        ruff = {},
-      },
+      ensure_installed = { 'basedpyright', 'ruff_lsp' },
+      servers = { basedpyright = {}, ruff = {} },
       on_setup = {
         ruff = function()
           Utils.lsp_on_attach(function(client, buffer) client.server_capabilities.hoverProvider = false end, { 'ruff' })
