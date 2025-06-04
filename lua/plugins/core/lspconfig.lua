@@ -94,18 +94,13 @@ return {
       -- END ufo capabilities
       local servers = opts.servers or {}
 
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, opts.ensure_installed or {})
-
+      local ensure_installed = opts.ensure_installed or {}
       if vim.fn.has('termux') == 1 then
         ensure_installed = vim.tbl_filter(function(server) return not vim.tbl_contains(opts.termux_no_install or {}, server) end, ensure_installed)
       end
-
       require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
       local on_setup = opts.on_setup or {}
-
-      require('lspconfig').lua_ls.setup(opts.servers.lua_ls)
 
       local function setup(server_name)
         local server = servers[server_name] or {}
