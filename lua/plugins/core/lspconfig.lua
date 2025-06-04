@@ -114,7 +114,10 @@ return {
         if on_setup[server_name] then
           on_setup[server_name](server, opts)
         end
-        require('lspconfig')[server_name].setup(server)
+        vim.lsp.enable(server_name)
+        vim.lsp.config(server_name, {
+          settings = server,
+        })
       end
 
       for server_name, _ in pairs(servers) do
