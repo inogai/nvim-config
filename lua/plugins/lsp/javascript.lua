@@ -44,7 +44,16 @@ return {
 
   {
     'neovim/nvim-lspconfig',
+    optional = true,
+    opts_extend = { 'ensure_installed' },
     opts = {
+      ensure_installed = {
+        'vtsls',
+        'tailwindcss',
+        'unocss',
+
+        'eslint_d',
+      },
       servers = {
         vtsls = {
           settings = {
