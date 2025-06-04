@@ -1,13 +1,9 @@
-local filetypes = {
-  'javascript',
-  'javascriptreact',
-  'javascript.jsx',
-  'typescript',
-  'typescriptreact',
-  'typescript.tsx',
-  'vue',
-  'html',
+local FILE_TYPES = {
+  has_tag = { 'javascriptreact', 'typescriptreact', 'vue', 'html' },
+  has_code = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+  all = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'html' },
 }
+
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -19,15 +15,16 @@ return {
 
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
-    ft = { 'html', 'vue', 'javascriptreact', 'typescriptreact' },
+    ft = FILE_TYPES.has_tag,
     opts = {
       enable_autocmd = false,
     },
     config = function(opts)
       require('ts_context_commentstring').setup(opts)
 
+      -- override the default get_option function to use ts_context_commentstring
       local get_option = vim.filetype.get_option
-
+      ---@diagnostic disable-next-line: duplicate-set-field
       vim.filetype.get_option = function(filetype, option)
         return option == 'commentstring' and require('ts_context_commentstring.internal').calculate_commentstring() or get_option(filetype, option)
       end
@@ -36,7 +33,7 @@ return {
 
   {
     'nabekou29/js-i18n.nvim',
-    ft = filetypes,
+    ft = FILE_TYPES.all,
     dependencies = {
       'neovim/nvim-lspconfig',
       'nvim-treesitter/nvim-treesitter',
@@ -86,33 +83,6 @@ return {
         },
         tailwindcss = {},
         unocss = {},
-        eslint = {
-          filetypes = {
-            'javascript',
-            'javascriptreact',
-            'javascript.jsx',
-            'typescript',
-            'typescriptreact',
-            'typescript.tsx',
-            'vue',
-            'html',
-            'markdown',
-            'json',
-            'jsonc',
-            'yaml',
-            'toml',
-            'xml',
-            'gql',
-            'graphql',
-            'astro',
-            'svelte',
-            'css',
-            'less',
-            'scss',
-            'pcss',
-            'postcss',
-          },
-        },
       },
       on_setup = {
         vtsls = function(_, opts)
