@@ -1,19 +1,16 @@
-return {
-  {
-    'neovim/nvim-lspconfig',
-    optional = true,
-    opts_extends = { 'ensure_installed' },
-    opts = {
-      ensure_installed = { 'basedpyright', 'ruff' },
-      servers = { basedpyright = {}, ruff = {} },
-      on_setup = {
-        ruff = function()
-          Utils.lsp_on_attach(function(client, buffer) client.server_capabilities.hoverProvider = false end, { 'ruff' })
-        end,
-      },
-    },
-  },
+vim.lsp.enable('basedpyright')
+vim.lsp.enable('ruff')
 
+Utils.lsp_on_attach_v2('ruff', function(client)
+  -- ruff only support hover for noqa directives
+  -- causing popup: 'No information available'
+  -- https://github.com/astral-sh/ruff/issues/11719
+  client.server_capabilities.hoverProvider = false
+end)
+
+return {
+  Utils.ts_ensure_installed({ 'python' }),
+  Utils.mason_ensure_install({ 'basedpyright', 'ruff' }),
   {
     'linux-cultist/venv-selector.nvim',
     cmd = 'VenvSelect',
@@ -37,6 +34,7 @@ return {
     dependencies = {
       'mfussenegger/nvim-dap',
     },
+    -- install debugpy in the venv
     config = function() require('dap-python').setup(vim.g.python3_host_prog) end,
   },
 }
