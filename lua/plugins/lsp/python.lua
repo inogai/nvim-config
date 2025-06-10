@@ -10,7 +10,7 @@ end)
 
 return {
   Utils.ts_ensure_installed({ 'python' }),
-  Utils.mason_ensure_install({ 'basedpyright', 'ruff' }),
+  Utils.mason_ensure_install({ 'basedpyright', 'ruff', 'debugpy' }),
   {
     'linux-cultist/venv-selector.nvim',
     cmd = 'VenvSelect',
@@ -34,7 +34,6 @@ return {
     dependencies = {
       'mfussenegger/nvim-dap',
     },
-    -- install debugpy in the venv
-    config = function() require('dap-python').setup(vim.g.python3_host_prog) end,
+    config = function() require('dap-python').setup('debugpy-adapter') end,
   },
 }
