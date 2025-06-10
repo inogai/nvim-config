@@ -4,7 +4,7 @@ return {
     optional = true,
     opts_extends = { 'ensure_installed' },
     opts = {
-      ensure_installed = { 'basedpyright', 'ruff_lsp' },
+      ensure_installed = { 'basedpyright', 'ruff' },
       servers = { basedpyright = {}, ruff = {} },
       on_setup = {
         ruff = function()
