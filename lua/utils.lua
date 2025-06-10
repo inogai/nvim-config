@@ -44,4 +44,30 @@ function M.expand_visual()
   return table.concat(sel, ' ')
 end
 
+function M.log(x) vim.notify(vim.inspect(x), vim.log.levels.INFO, { title = 'Log', render = 'minimal' }) end
+
+---@param names string[]
+function M.mason_ensure_install(names)
+  return {
+    'neovim/nvim-lspconfig',
+    optional = true,
+    opts_extend = { 'ensure_installed' },
+    opts = {
+      ensure_installed = names,
+    },
+  }
+end
+
+---@param names string[]
+function M.ts_ensure_installed(names)
+  return {
+    'nvim-treesitter/nvim-treesitter',
+    optional = true,
+    opts_extend = { 'ensure_installed' },
+    opts = {
+      ensure_installed = names,
+    },
+  }
+end
+
 return M

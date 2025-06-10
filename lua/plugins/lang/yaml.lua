@@ -1,53 +1,27 @@
-return {
-  {
-    'nvim-treesitter/nvim-treesitter',
-    opts = { ensure_installed = { 'yaml' } },
+vim.lsp.enable('yamlls')
+vim.lsp.config('yamlls', {
+  before_init = function(_, client_config)
+    client_config.settings.yaml.schemas = require('schemastore').json.schemas()
+  end,
+  settings = {
+    yaml = {
+      schemas = {},
+      schemaStore = {
+        -- You must disable built-in schemaStore support if you want to use
+        -- this plugin and its advanced options like `ignore`.
+        enable = false,
+        -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+        url = '',
+      },
+    },
   },
+})
 
+return {
+  Utils.ts_ensure_installed({ 'yaml' }),
+  Utils.mason_ensure_install({ 'yaml-language-server' }),
   {
     'b0o/SchemaStore.nvim',
     lazy = true,
-    version = false,
-  },
-
-  {
-    'neovim/nvim-lspconfig',
-    opts = {
-      -- make sure mason installs the server
-      servers = {
-        yamlls = {
-          -- Have to add this for yamlls to understand that we support line folding
-          capabilities = {
-            textDocument = {
-              foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
-              },
-            },
-          },
-          -- lazy-load schemastore when needed
-          on_new_config = function(new_config)
-            new_config.settings.yaml.schemas = vim.tbl_deep_extend('force', new_config.settings.yaml.schemas or {}, require('schemastore').yaml.schemas())
-          end,
-          settings = {
-            redhat = { telemetry = { enabled = false } },
-            yaml = {
-              keyOrdering = false,
-              format = {
-                enable = true,
-              },
-              validate = true,
-              schemaStore = {
-                -- Must disable built-in schemaStore support to use
-                -- schemas from SchemaStore.nvim plugin
-                enable = false,
-                -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-                url = '',
-              },
-            },
-          },
-        },
-      },
-    },
   },
 }

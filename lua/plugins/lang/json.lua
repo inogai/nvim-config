@@ -1,36 +1,22 @@
-return {
-  {
-    'nvim-treesitter/nvim-treesitter',
-    opts = { ensure_installed = { 'json5' } },
+vim.lsp.enable('jsonls')
+vim.lsp.config('jsonls', {
+  before_init = function(_, client_config)
+    client_config.settings.json = client_config.settings.json or {}
+    client_config.settings.json.schemas = require('schemastore').json.schemas()
+  end,
+  settings = {
+    json = {
+      schemas = {},
+      validate = { enable = true },
+    },
   },
+})
 
+return {
+  Utils.ts_ensure_installed({ 'json' }),
+  Utils.mason_ensure_install({ 'json-lsp' }),
   {
     'b0o/SchemaStore.nvim',
     lazy = true,
-    version = false, -- last release is way too old
-  },
-
-  {
-    'neovim/nvim-lspconfig',
-    opts = {
-      -- make sure mason installs the server
-      servers = {
-        jsonls = {
-          -- lazy-load schemastore when needed
-          on_new_config = function(new_config)
-            new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-            vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
-          end,
-          settings = {
-            json = {
-              format = {
-                enable = true,
-              },
-              validate = { enable = true },
-            },
-          },
-        },
-      },
-    },
   },
 }
