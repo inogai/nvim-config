@@ -1,17 +1,17 @@
+---@module 'snacks'
+
 return {
-  '3rd/image.nvim',
-  opts = {
-    integrations = {
-      neorg = {
-        enabled = true,
-        clear_in_insert_mode = true,
-        download_remote_images = true,
-        only_render_image_at_cursor = false,
-        only_render_image_at_cursor_mode = 'popup',
-        floating_windows = false,
-        filetypes = { 'norg' },
+  {
+    'folke/snacks.nvim',
+    ---@type snacks.Config
+    opts = {
+      image = {
+        doc = {
+          enable = true,
+          max_width = 80,
+          max_height = 10,
+        },
       },
     },
-    window_overlap_clear_enabled = true,
   },
 }

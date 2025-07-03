@@ -41,7 +41,7 @@ return {
             },
           },
         },
-        ['core.integrations.image'] = {},
+        -- ['core.integrations.image'] = {},
       },
     },
     keys = {
