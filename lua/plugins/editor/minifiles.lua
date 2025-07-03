@@ -19,8 +19,34 @@ function M.focus(cwd)
   MiniFiles.open(cwd, false)
 end
 
+---@param file string
+function M.focus_file(file)
+  local dirname = vim.fn.fnamemodify(file, ':p:h')
+  local basename = vim.fn.fnamemodify(file, ':t')
+
+  vim.api.nvim_create_augroup('my.mini_files.focus_file', { clear = true })
+
+  local function cursor_basename()
+    local line = vim.fn.search(basename, 'w')
+    if line == 0 then
+      vim.info("File '" .. basename .. "' not found in the explorer.")
+      return
+    end
+    vim.fn.cursor(line, 1)
+    vim.api.nvim_create_augroup('my.mini_files.focus_file', { clear = true })
+  end
+
+  vim.api.nvim_create_autocmd('User', {
+    group = 'my.mini_files.focus_file',
+    pattern = 'MiniFilesExplorerOpen',
+    callback = cursor_basename,
+  })
+
+  M.focus(dirname)
+end
+
 ---@param blacklist integer[]
-function M.find_last_active_file(blacklist)
+function M._find_last_active_file(blacklist)
   local bufs = vim.api.nvim_list_bufs()
   local last_active_dir = nil
   local last_active_time = 0
@@ -47,24 +73,22 @@ function M.find_last_active_file(blacklist)
   return last_active_dir
 end
 
-function M.foucs_last_active_file_dir()
-  local laf = M.find_last_active_file(M.MF_BUFS)
+function M.foucs_last_active_file()
+  local laf = M._find_last_active_file(M.MF_BUFS)
 
   if laf == nil then
     print('No dir to be focused.')
     return
   end
 
-  local last_active_dir = vim.fn.fnamemodify(laf, ':p:h')
-
-  M.focus(last_active_dir)
+  M.focus_file(laf)
 end
 
 vim.api.nvim_create_autocmd('User', {
   pattern = 'MiniFilesBufferCreate',
   callback = function(args)
     table.insert(M.MF_BUFS, args.data.buf_id)
-    vim.keymap.set('n', '@', M.foucs_last_active_file_dir, { buffer = args.data.buf_id })
+    vim.keymap.set('n', '@', M.foucs_last_active_file, { buffer = args.data.buf_id })
   end,
 })
 
