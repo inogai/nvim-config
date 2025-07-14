@@ -15,7 +15,7 @@ local hlgroups = {
 }
 
 return {
-  'folke/snacks.nvim',
+  'inogai/snacks.nvim',
   priority = 1000,
   lazy = false,
   ---@type snacks.Config
