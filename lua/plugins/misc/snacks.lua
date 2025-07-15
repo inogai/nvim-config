@@ -36,7 +36,6 @@ return {
   },
   keys = {
     { '<leader>gl', function() Snacks.lazygit.open() end, desc = '[L]azygit' },
-    { '<C-/>', function() Snacks.terminal.toggle() end, desc = 'Terminal', mode = { 'n', 'i', 't' } },
   },
   config = function(_, opts)
     require('snacks').setup(opts)
