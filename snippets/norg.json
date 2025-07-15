@@ -1,0 +1,8 @@
+{
+  "Front matter": {
+    "prefix": ["fro"],
+    "body": ["@document.meta\ntitle: $1\ncreated: $0\n@end\n"],
+    "description": "Front matter for a Norg document"
+  }
+}
+
