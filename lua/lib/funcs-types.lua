@@ -37,8 +37,9 @@ function R.any(tbl, fn) end
 function R.any(fn) end
 
 ---@generic T, R
----@param data T
+---@param data T[]
 ---@param fn fun(data: T): R
+---@return R[]
 function R.map(data, fn) end
 
 ---@generic T, R

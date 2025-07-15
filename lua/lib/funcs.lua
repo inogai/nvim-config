@@ -17,17 +17,7 @@ local function auto_curry(orig_fn, param_count)
   end
 end
 
-function R._filter(fn)
-  return function(tbl)
-    local result = {}
-    for _, v in ipairs(tbl) do
-      if fn(v) then
-        table.insert(result, v)
-      end
-    end
-    return result
-  end
-end
+function R._filter(tbl, fn) return vim.tbl_filter(fn, tbl) end
 
 R.filter = auto_curry(R._filter, 2)
 
@@ -59,8 +49,6 @@ R.map = auto_curry(R._map, 2)
 
 function R.pipe(data, ...)
   local funcs = { ... }
-  vim.notify(vim.inspect(data))
-  vim.notify(vim.inspect(funcs))
   local result = data
 
   for _, fn in ipairs(funcs) do
