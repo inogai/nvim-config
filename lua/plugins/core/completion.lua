@@ -149,7 +149,7 @@ return {
         ['<C-k>'] = { 'select_prev', 'fallback' },
         ['<C-j>'] = { 'select_next', 'fallback' },
         ['<C-l>'] = { 'select_and_accept' },
-        ['<Tab>'] = { 'select_and_accept', 'snippet_forward', 'fallback' },
+        ['<Tab>'] = { 'snippet_forward' },
         ['<Esc>'] = {
           function()
             local ms = require('mini.snippets')
