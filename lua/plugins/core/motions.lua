@@ -90,6 +90,9 @@ return {
     'echasnovski/mini.surround',
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = {
+      custom_surroundings = {
+        ['('] = { output = { left = '(', right = ')' } },
+      },
       mappings = {
         add = 'sa', -- Add surrounding in Normal and Visual modes
         delete = 'sd', -- Delete surrounding
