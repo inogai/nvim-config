@@ -203,11 +203,9 @@ return {
             if session == nil then
               -- Case 1:  No session. Exit insert mode.
             elseif
-              R.any(
-                session.nodes,
-                ---@param node Node
-                function(node) return node_is_tabstop(node) and node_under_cursor(node) end
-              )
+              vim
+                .iter(session.nodes)
+                :any(function(node) return node_is_tabstop(node) and node_under_cursor(node) end)
             then
               -- Case 2:  Session exists, and cursor under node.
               --          if cmp menu exists,  close it,

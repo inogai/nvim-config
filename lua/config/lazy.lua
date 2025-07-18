@@ -9,7 +9,6 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 _G.Utils = require('utils')
-_G.R = require('lib/funcs')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
