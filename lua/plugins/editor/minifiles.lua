@@ -3,9 +3,7 @@ local M = {}
 ---@param cwd string
 function M.toggle(cwd)
   local MiniFiles = require('mini.files')
-  if not MiniFiles.close() then
-    MiniFiles.open(cwd, true)
-  end
+  if not MiniFiles.close() then MiniFiles.open(cwd, true) end
 end
 
 function M.toggle_at_root() M.toggle(vim.fn.getcwd()) end
@@ -29,7 +27,7 @@ function M.focus_file(file)
   local function cursor_basename()
     local line = vim.fn.search(basename, 'w')
     if line == 0 then
-      vim.info("File '" .. basename .. "' not found in the explorer.")
+      vim.notify("[mf.utils.focus_file] File '" .. basename .. "' not found in the explorer.")
       return
     end
     vim.fn.cursor(line, 1)
@@ -52,15 +50,11 @@ function M._find_last_active_file(blacklist)
   local last_active_time = 0
 
   for _, buf in ipairs(bufs) do
-    if vim.tbl_contains(blacklist, buf) then
-      goto continue
-    end
+    if vim.tbl_contains(blacklist, buf) then goto continue end
 
     local bufinfo = vim.fn.getbufinfo(buf)[1]
 
-    if not vim.fn.filereadable(bufinfo.name) then
-      goto continue
-    end
+    if not vim.fn.filereadable(bufinfo.name) then goto continue end
 
     if bufinfo.lastused > last_active_time then
       last_active_time = bufinfo.lastused
