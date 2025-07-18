@@ -1,3 +1,50 @@
+local function longest_head_slice(text, pattern)
+  for i = #text, 1, -1 do
+    local head = pattern:sub(1, i)
+    if text:find(head, 1, true) then return head end
+  end
+
+  return nil
+end
+
+local function select_accept_and_dedup_pairs()
+  local blink = require('blink.cmp')
+  local completion_list = require('blink.cmp.completion.list')
+  local selected_item = blink.get_selected_item() or completion_list[1]
+
+  return blink.select_and_accept({
+    callback = function()
+      local textEdit = selected_item and selected_item.textEdit
+      if textEdit == nil then return end
+
+      local end_pos = textEdit.range['end']
+      -- Trailing end pairs
+      local after_text = vim.api.nvim_buf_get_text(
+        0,
+        end_pos.line,
+        end_pos.character,
+        end_pos.line,
+        end_pos.character + 99,
+        {}
+      )[1]
+      after_text = string.match(after_text, '[\')}>"%]]')
+      if after_text == nil then return end
+
+      -- Identify the end pair existence in the textEdit.newText
+      local match = longest_head_slice(textEdit.newText, after_text)
+      if match == nil then return end
+      vim.api.nvim_buf_set_text(
+        0,
+        end_pos.line,
+        end_pos.character,
+        end_pos.line,
+        end_pos.character + #match,
+        { '' }
+      )
+    end,
+  })
+end
+
 local kind_icon = {
   ellipsis = false,
   text = function(ctx)
@@ -31,9 +78,7 @@ local function node_under_cursor(node)
   cursor[1] = cursor[1] - 1 -- cursor is 1-based, but extmark is 0-based
 
   local offset = 0
-  if node.text ~= nil then
-    offset = #node.text
-  end
+  if node.text ~= nil then offset = #node.text end
 
   if cursor[1] == extmark[1] and cursor[2] >= extmark[2] and cursor[2] <= extmark[2] + offset then
     return true
@@ -148,8 +193,9 @@ return {
         preset = 'none',
         ['<C-k>'] = { 'select_prev', 'fallback' },
         ['<C-j>'] = { 'select_next', 'fallback' },
-        ['<C-l>'] = { 'select_and_accept' },
-        ['<Tab>'] = { 'snippet_forward' },
+        ['<C-n>'] = { 'snippet_forward' },
+        ['<C-l>'] = { select_accept_and_dedup_pairs, 'fallback' },
+        ['<Tab>'] = { 'snippet_forward', select_accept_and_dedup_pairs },
         ['<Esc>'] = {
           function()
             local ms = require('mini.snippets')
