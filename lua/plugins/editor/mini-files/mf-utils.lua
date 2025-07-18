@@ -6,10 +6,9 @@ function M.toggle(cwd)
   if not MiniFiles.close() then MiniFiles.open(cwd, true) end
 end
 
-function M.toggle_at_root() M.toggle(vim.fn.getcwd()) end
-
+---Keep track of MiniFiles buffers
 ---@type integer[]
-M.MF_BUFS = {}
+M.mf_buffers = {}
 
 ---@param cwd string
 function M.focus(cwd)
@@ -68,7 +67,7 @@ function M._find_last_active_file(blacklist)
 end
 
 function M.foucs_last_active_file()
-  local laf = M._find_last_active_file(M.MF_BUFS)
+  local laf = M._find_last_active_file(M.mf_buffers)
 
   if laf == nil then
     print('No dir to be focused.')
@@ -81,37 +80,12 @@ end
 vim.api.nvim_create_autocmd('User', {
   pattern = 'MiniFilesBufferCreate',
   callback = function(args)
-    table.insert(M.MF_BUFS, args.data.buf_id)
+    -- Keep track of MiniFiles buffers
+    table.insert(M.mf_buffers, args.data.buf_id)
+
+    -- Bind '@' to focus the last active file in the MiniFiles buffer
     vim.keymap.set('n', '@', M.foucs_last_active_file, { buffer = args.data.buf_id })
   end,
 })
 
-return {
-  {
-    'echasnovski/mini.files',
-    lazy = false,
-    opts = {
-      windows = {
-        preview = true,
-        width_focus = 30,
-        width_preview = 30,
-      },
-      mappings = {
-        toggle_hidden = 'g.',
-        reveal_cwd = '',
-        change_cwd = 'gc',
-        go_in_horizontal = '<C-w>s',
-        go_in_vertical = '<C-w>v',
-        go_in_horizontal_plus = '<C-w>S',
-        go_in_vertical_plus = '<C-w>V',
-        synchronize = ';',
-      },
-      options = {
-        use_as_default_explorer = true,
-      },
-    },
-    keys = {
-      { '<leader>e', M.toggle_at_root, desc = 'Files' },
-    },
-  },
-}
+return M

@@ -58,10 +58,8 @@ local function fetchGitStatus(cwd, callback)
   local clean_cwd = cwd:gsub('^minifiles://%d+/', '')
   ---@param content table
   local function on_exit(content)
-    if content.code == 0 then
-      callback(content.stdout)
-      -- vim.g.content = content.stdout
-    end
+    if content.code == 0 then callback(content.stdout)       -- vim.g.content = content.stdout
+end
   end
   ---@see vim.system
   vim.system({ 'git', 'status', '--ignored', '--porcelain' }, { text = true, cwd = clean_cwd }, on_exit)
@@ -79,9 +77,7 @@ local function updateMiniWithGit(buf_id, gitStatusMap)
 
     for i = 1, nlines do
       local entry = MiniFiles.get_fs_entry(buf_id, i)
-      if not entry then
-        break
-      end
+      if not entry then break end
       local relativePath = entry.path:gsub('^' .. escapedcwd .. '/', '')
       local status = gitStatusMap[relativePath]
 
@@ -125,9 +121,7 @@ local function parseGitStatus(content)
         gitStatusMap[currentKey] = status
       else
         -- If it's not the last part, it's a directory. Check if it exists, if not, add it.
-        if not gitStatusMap[currentKey] then
-          gitStatusMap[currentKey] = status
-        end
+        if not gitStatusMap[currentKey] then gitStatusMap[currentKey] = status end
       end
     end
   end
@@ -137,9 +131,7 @@ end
 ---@param buf_id integer
 ---@return nil
 local function updateGitStatus(buf_id)
-  if not vim.fs.root(buf_id, '.git') then
-    return
-  end
+  if not vim.fs.root(buf_id, '.git') then return end
   local cwd = vim.fs.root(buf_id, '.git')
   -- local cwd = vim.fn.expand("%:p:h")
   local currentTime = os.time()
@@ -184,9 +176,7 @@ autocmd('User', {
   callback = function(args)
     local bufnr = args.data.buf_id
     local cwd = vim.fs.root(bufnr, '.git')
-    if gitStatusCache[cwd] then
-      updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap)
-    end
+    if gitStatusCache[cwd] then updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap) end
   end,
 })
 
