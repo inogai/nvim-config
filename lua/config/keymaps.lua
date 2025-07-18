@@ -1,5 +1,3 @@
-vim.keymap.set('n', 's', '')
-
 ---@type LazyKeysSpec[]
 local keys = {
   -- Pasting
