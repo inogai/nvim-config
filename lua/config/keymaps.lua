@@ -29,27 +29,23 @@ local keys = {
   { '<leader>q', vim.diagnostic.setloclist, desc = 'Open diagnostic [Q]uickfix list' },
   {
     ']d',
-    function() vim.diagnostic.goto_next() end,
-    -- function() vim.diagnostic.jump({ count = 1, float = true }) end,
+    function() vim.diagnostic.jump({ count = 1, float = true }) end,
     desc = 'Next [D]iagnostic',
   },
   {
     '[d',
-    function() vim.diagnostic.goto_prev() end,
-    -- function() vim.diagnostic.jump({ count = -1, float = true }) end,
+    function() vim.diagnostic.jump({ count = -1, float = true }) end,
     desc = 'Prev [D]iagnostic',
   },
   {
     ']e',
-    function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end,
-    -- function() vim.diagnostic.jump({ count = 1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
-    desc = 'Next [D]iagnostic',
+    function() vim.diagnostic.jump({ count = 1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
+    desc = 'Next [E]rror',
   },
   {
     '[e',
-    function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end,
-    -- function() vim.diagnostic.jump({ count = -1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
-    desc = 'Prev [D]iagnostic',
+    function() vim.diagnostic.jump({ count = -1, float = true, severity = vim.diagnostic.severity.ERROR }) end,
+    desc = 'Prev [E]rror',
   },
 
   -- Window Navigation
@@ -79,14 +75,10 @@ end
 ---@param name string
 ---@param opts ToggleOpts
 local function toggle_g(var, name, opts)
-  if vim.g[var] == nil then
-    vim.g[var] = opts.default
-  end
+  if vim.g[var] == nil then vim.g[var] = opts.default end
 
   local reversed = function(x) return x end
-  if opts.reversed then
-    reversed = function(x) return not x end
-  end
+  if opts.reversed then reversed = function(x) return not x end end
 
   return Snacks.toggle({
     name = name,
@@ -102,17 +94,13 @@ local function toggle_b(var, name, opts)
   vim.api.nvim_create_augroup('toggle_b', { clear = false })
   vim.api.nvim_create_autocmd('BufEnter', {
     callback = function()
-      if vim.b[var] == nil then
-        vim.b[var] = opts.default
-      end
+      if vim.b[var] == nil then vim.b[var] = opts.default end
     end,
     group = 'toggle_b',
   })
 
   local reversed = function(x) return x end
-  if opts.reversed then
-    reversed = function(x) return not x end
-  end
+  if opts.reversed then reversed = function(x) return not x end end
 
   return Snacks.toggle({
     name = name,
