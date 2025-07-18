@@ -78,7 +78,6 @@ vim.opt.conceallevel = 2
 -- wrap related
 vim.opt.wrap = true
 vim.opt.cc = '81'
-vim.opt.textwidth = 80
 
 vim.lsp.inlay_hint.enable(true)
 vim.diagnostic.config({ virtual_text = true })

@@ -8,6 +8,11 @@ vim.api.nvim_create_autocmd('Filetype', {
 
 return {
   {
+    -- provides cursor wrapping functionality
+    'andrewferrier/wrapping.nvim',
+    opts = {},
+  },
+  {
     -- provides forced hard-wrapping of text
     'rickhowe/wrapwidth',
   },
