@@ -15,7 +15,7 @@ function M.toggle_g(var, name, opts)
   local reversed = function(x) return x end
   if opts.reversed then reversed = function(x) return not x end end
 
-  return require('snacks').toggle({
+  return Snacks.toggle({
     name = name,
     set = function(val) vim.g[var] = reversed(val) end,
     get = function() return reversed(vim.g[var]) end,
@@ -39,10 +39,29 @@ function M.toggle_b(var, name, opts)
   local reversed = function(x) return x end
   if opts.reversed then reversed = function(x) return not x end end
 
-  return require('snacks').toggle({
+  return Snacks.toggle({
     name = name,
     set = function(val) vim.b[var] = reversed(val) end,
     get = function() return reversed(vim.b[var]) end,
+  })
+end
+
+function M.toggle_lsp(server, name)
+  ---@return vim.lsp.Client
+  local function get_client()
+    return vim.lsp.get_clients({ name = server, bufnr = 0 })[1] --
+  end
+
+  return Snacks.toggle({
+    name = name,
+    set = function(val)
+      if val then
+        vim.cmd('LspStart ' .. server)
+      else
+        vim.cmd('LspStop ' .. server)
+      end
+    end,
+    get = function() return get_client() ~= nil end,
   })
 end
 
