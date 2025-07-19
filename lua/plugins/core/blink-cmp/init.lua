@@ -63,10 +63,18 @@ return {
 
       keymap = {
         preset = 'none',
+
+        -- Snippets
+        ['<C-n>'] = { 'snippet_forward', 'fallback' },
+        ['<C-p>'] = { 'snippet_backward', 'fallback' },
+        ['<C-e>'] = { actions.snippet_clear },
+
+        -- Navigation
         ['<C-k>'] = { 'select_prev', 'fallback' },
         ['<C-j>'] = { 'select_next', 'fallback' },
-        ['<C-n>'] = { 'snippet_forward' },
         ['<C-l>'] = { actions.select_accept_and_deduplicate, 'fallback' },
+
+        -- Tab
         ['<Tab>'] = {
           function(cmp)
             if vim.b[vim.api.nvim_get_current_buf()].nes_state then
@@ -76,18 +84,9 @@ return {
                 and require('copilot-lsp.nes').walk_cursor_end_edit()
               )
             end
-            if cmp.snippet_active() then
-              return cmp.accept()
-            else
-              return cmp.select_and_accept()
-            end
+            return actions.select_accept_and_deduplicate()
           end,
-          'snippet_forward',
-          'fallback',
         },
-        ['<Esc>'] = { actions.snippet_clear, 'fallback' },
-        ['<C-Tab>'] = { 'snippet_forward', 'fallback' },
-        ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
       },
 
       appearance = {
