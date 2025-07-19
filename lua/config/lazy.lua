@@ -26,6 +26,7 @@ local opts = {
     -- import your plugins
     { import = 'plugins' },
     { import = 'plugins.core' },
+    { import = 'plugins.ai' },
     { import = 'plugins.lang' },
     { import = 'plugins.lsp' },
     { import = 'plugins.editor' },

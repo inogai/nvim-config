@@ -19,25 +19,14 @@ return {
     end,
   },
 
-  -- Github Copilot API
-  {
-    'zbirenbaum/copilot.lua',
-    cmd = 'Copilot',
-    event = 'InsertEnter',
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-      copilot_model = 'gpt-4o-copilot',
-    },
-  },
-
   -- Blink Completion
   {
     'saghen/blink.cmp',
     lazy = false,
     version = '*',
     dependencies = {
-      'giuxtaposition/blink-cmp-copilot',
+      -- 'giuxtaposition/blink-cmp-copilot',
+      'fang2hou/blink-copilot',
       'Kaiser-Yang/blink-cmp-avante',
     },
     opts_extend = { 'sources.default' },
@@ -78,7 +67,24 @@ return {
         ['<C-j>'] = { 'select_next', 'fallback' },
         ['<C-n>'] = { 'snippet_forward' },
         ['<C-l>'] = { actions.select_accept_and_deduplicate, 'fallback' },
-        ['<Tab>'] = { 'snippet_forward' },
+        ['<Tab>'] = {
+          function(cmp)
+            if vim.b[vim.api.nvim_get_current_buf()].nes_state then
+              cmp.hide()
+              return (
+                require('copilot-lsp.nes').apply_pending_nes()
+                and require('copilot-lsp.nes').walk_cursor_end_edit()
+              )
+            end
+            if cmp.snippet_active() then
+              return cmp.accept()
+            else
+              return cmp.select_and_accept()
+            end
+          end,
+          'snippet_forward',
+          'fallback',
+        },
         ['<Esc>'] = { actions.snippet_clear, 'fallback' },
         ['<C-Tab>'] = { 'snippet_forward', 'fallback' },
         ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
