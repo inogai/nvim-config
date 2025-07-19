@@ -19,21 +19,21 @@ end
 ---@return string symbol, string hlGroup
 local function mapSymbols(status, is_symlink)
   local statusMap = {
-        -- stylua: ignore start 
-        [" M"] = { symbol = "•", hlGroup  = "MiniDiffSignChange"}, -- Modified in the working directory
-        ["M "] = { symbol = "✹", hlGroup  = "MiniDiffSignChange"}, -- modified in index
-        ["MM"] = { symbol = "≠", hlGroup  = "MiniDiffSignChange"}, -- modified in both working tree and index
-        ["A "] = { symbol = "+", hlGroup  = "MiniDiffSignAdd"   }, -- Added to the staging area, new file
-        ["AA"] = { symbol = "≈", hlGroup  = "MiniDiffSignAdd"   }, -- file is added in both working tree and index
-        ["D "] = { symbol = "-", hlGroup  = "MiniDiffSignDelete"}, -- Deleted from the staging area
-        ["AM"] = { symbol = "⊕", hlGroup  = "MiniDiffSignChange"}, -- added in working tree, modified in index
-        ["AD"] = { symbol = "-•", hlGroup = "MiniDiffSignChange"}, -- Added in the index and deleted in the working directory
-        ["R "] = { symbol = "→", hlGroup  = "MiniDiffSignChange"}, -- Renamed in the index
-        ["U "] = { symbol = "‖", hlGroup  = "MiniDiffSignChange"}, -- Unmerged path
-        ["UU"] = { symbol = "⇄", hlGroup  = "MiniDiffSignAdd"   }, -- file is unmerged
-        ["UA"] = { symbol = "⊕", hlGroup  = "MiniDiffSignAdd"   }, -- file is unmerged and added in working tree
-        ["??"] = { symbol = "?", hlGroup  = "MiniDiffSignDelete"}, -- Untracked files
-        ["!!"] = { symbol = "!", hlGroup  = "MiniDiffSignChange"}, -- Ignored files
+    -- stylua: ignore start 
+    [" M"] = { symbol = "•", hlGroup  = "MiniDiffSignChange" }, -- Modified in the working directory
+    ["M "] = { symbol = "✹", hlGroup  = "MiniDiffSignChange" }, -- modified in index
+    ["MM"] = { symbol = "≠", hlGroup  = "MiniDiffSignChange" }, -- modified in both working tree and index
+    ["A "] = { symbol = "+", hlGroup  = "MiniDiffSignAdd"    }, -- Added to the staging area, new file
+    ["AA"] = { symbol = "≈", hlGroup  = "MiniDiffSignAdd"    }, -- file is added in both working tree and index
+    ["D "] = { symbol = "-", hlGroup  = "MiniDiffSignDelete" }, -- Deleted from the staging area
+    ["AM"] = { symbol = "⊕", hlGroup  = "MiniDiffSignChange" }, -- added in working tree, modified in index
+    ["AD"] = { symbol = "-•", hlGroup = "MiniDiffSignChange" }, -- Added in the index and deleted in the working directory
+    ["R "] = { symbol = "→", hlGroup  = "MiniDiffSignChange" }, -- Renamed in the index
+    ["U "] = { symbol = "‖", hlGroup  = "MiniDiffSignChange" }, -- Unmerged path
+    ["UU"] = { symbol = "⇄", hlGroup  = "MiniDiffSignAdd"    }, -- file is unmerged
+    ["UA"] = { symbol = "⊕", hlGroup  = "MiniDiffSignAdd"    }, -- file is unmerged and added in working tree
+    ["??"] = { symbol = "?", hlGroup  = "MiniDiffSignDelete" }, -- Untracked files
+    ["!!"] = { symbol = "!", hlGroup  = "MiniDiffSignChange"}, -- Ignored files
     -- stylua: ignore end
   }
 
@@ -58,8 +58,9 @@ local function fetchGitStatus(cwd, callback)
   local clean_cwd = cwd:gsub('^minifiles://%d+/', '')
   ---@param content table
   local function on_exit(content)
-    if content.code == 0 then callback(content.stdout)       -- vim.g.content = content.stdout
-end
+    if content.code == 0 then
+      callback(content.stdout) -- vim.g.content = content.stdout
+    end
   end
   ---@see vim.system
   vim.system({ 'git', 'status', '--ignored', '--porcelain' }, { text = true, cwd = clean_cwd }, on_exit)
@@ -88,6 +89,17 @@ local function updateMiniWithGit(buf_id, gitStatusMap)
           sign_hl_group = hlGroup,
           priority = 2,
         })
+        -- This below code is responsible for coloring the text of the items. comment it out if you don't want that
+        local line = vim.api.nvim_buf_get_lines(buf_id, i - 1, i, false)[1]
+        -- Find the name position accounting for potential icons
+        local nameStartCol = line:find(vim.pesc(entry.name)) or 0
+
+        if nameStartCol > 0 then
+          vim.api.nvim_buf_set_extmark(buf_id, nsMiniFiles, i - 1, nameStartCol - 1, {
+            end_col = nameStartCol + #entry.name - 1,
+            hl_group = hlGroup,
+          })
+        end
       else
       end
     end
@@ -179,5 +191,3 @@ autocmd('User', {
     if gitStatusCache[cwd] then updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap) end
   end,
 })
-
-return {}
