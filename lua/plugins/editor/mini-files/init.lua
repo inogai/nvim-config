@@ -1,6 +1,3 @@
--- git integration
-require('plugins.editor.mini-files.git-integration')
-
 local M = require('plugins.editor.mini-files.mf-utils')
 
 return {
@@ -27,8 +24,14 @@ return {
         use_as_default_explorer = true,
       },
     },
+    config = function(_, opts)
+      local MiniFiles = require('mini.files')
+      MiniFiles.setup(opts)
+
+      require('plugins.editor.mini-files.git-integration')
+    end,
     keys = {
-      { '<leader>e', M.toggle_at_root, desc = 'Files' },
+      { '<leader>e', M.toggle, desc = '[E]xplore' },
     },
   },
 }

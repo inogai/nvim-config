@@ -1,8 +1,8 @@
 local M = {}
 
----@param cwd string
+---@param cwd string | nil
 function M.toggle(cwd)
-  local MiniFiles = require('mini.files')
+  cwd = cwd or vim.fn.getcwd()
   if not MiniFiles.close() then MiniFiles.open(cwd, true) end
 end
 
@@ -11,10 +11,7 @@ end
 M.mf_buffers = {}
 
 ---@param cwd string
-function M.focus(cwd)
-  local MiniFiles = require('mini.files')
-  MiniFiles.open(cwd, false)
-end
+function M.focus(cwd) MiniFiles.open(cwd, false) end
 
 ---@param file string
 function M.focus_file(file)
