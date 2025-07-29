@@ -4,8 +4,9 @@ local M = {}
 ---Stop active MiniSnippets session
 ---@return boolean | nil
 function M.snippet_clear()
-  if require('mini.snippets').session.get() then
-    require('mini.snippets').session.stop()
+  ---@module 'mini.snippets'
+  if MiniSnippets.session.get() then
+    vim.schedule(function() MiniSnippets.session.stop() end)
     return true
   end
 end
