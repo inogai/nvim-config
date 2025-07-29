@@ -65,9 +65,8 @@ return {
         preset = 'none',
 
         -- Snippets
-        ['<C-n>'] = { 'snippet_forward', 'fallback' },
-        ['<C-p>'] = { 'snippet_backward', 'fallback' },
-        ['<C-e>'] = { actions.snippet_clear },
+        ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+        ['<Esc>'] = { actions.snippet_clear, 'fallback' },
 
         -- Navigation
         ['<C-k>'] = { 'select_prev', 'fallback' },
@@ -87,6 +86,7 @@ return {
             return nil
           end,
           'select_and_accept',
+          'snippet_forward',
         },
       },
 
