@@ -1,0 +1,8 @@
+{
+  "quantity": {
+    "prefix": ["#q"],
+    "body": ["#qty[$1][$2]$0"],
+    "description": "Quantity snippet for fancy-units."
+  }
+}
+
