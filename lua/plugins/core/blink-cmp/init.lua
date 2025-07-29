@@ -72,7 +72,7 @@ return {
         -- Navigation
         ['<C-k>'] = { 'select_prev', 'fallback' },
         ['<C-j>'] = { 'select_next', 'fallback' },
-        ['<C-l>'] = { actions.select_accept_and_deduplicate, 'fallback' },
+        ['<C-l>'] = { 'select_and_accept', 'fallback' },
 
         -- Tab
         ['<Tab>'] = {
@@ -84,8 +84,9 @@ return {
                 and require('copilot-lsp.nes').walk_cursor_end_edit()
               )
             end
-            return actions.select_accept_and_deduplicate()
+            return nil
           end,
+          'select_and_accept',
         },
       },
 
