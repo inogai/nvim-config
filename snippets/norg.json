@@ -1,7 +1,7 @@
 {
   "Front matter": {
-    "prefix": ["fro"],
-    "body": ["@document.meta\ntitle: $1\ncreated: $0\n@end\n"],
+    "prefix": ["--"],
+    "body": ["@document.meta\ntitle: $1\ncreated: ${2:${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}}\n@end\n"],
     "description": "Front matter for a Norg document"
   }
 }
