@@ -33,6 +33,8 @@ return {
           ['@markup.italic'] = { fg = C.blue },
           ['@custom.link.generic'] = { fg = C.sky, style = { 'underdotted' } },
           ['@custom.strong.underdotted'] = { fg = C.maroon, style = { 'bold', 'underdotted' } },
+          ['@module'] = { fg = C.peach, style = { 'italic' } },
+          ['zshOperator'] = { link = '@operator' },
           ['DiagnosticUnderlineInfo'] = { sp = C.teal, style = { 'undercurl' } },
         }
       end,
