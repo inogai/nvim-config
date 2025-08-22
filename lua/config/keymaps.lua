@@ -3,6 +3,7 @@ require('config.keymaps.toggle')
 ---@type LazyKeysSpec[]
 local keys = {
   -- Pasting
+  { '<D-a>', 'ggVG', desc = 'Select All', mode = { 'n', 'i' } },
   { '<D-v>', 'p', desc = 'Paste', mode = { 'n' } },
   --  Visual: store replaced content in "_  instead of "+
   { 'p', '"_dP', desc = 'Paste Over', mode = { 'v' } },
