@@ -15,6 +15,26 @@ local keys = {
   { '<Esc>', '<cmd>nohlsearch<CR>', desc = 'Clear search highlights' },
   { 's', '', desc = '+Surround', mode = { 'n', 'v' } },
 
+  -- Yanking
+  {
+    'yp',
+    function()
+      local path = vim.fn.expand('%')
+      vim.fn.setreg('+', path)
+      vim.notify('Path copied to clipboard:\n' .. path)
+    end,
+    desc = 'Path',
+  },
+  {
+    'yP',
+    function()
+      local path = vim.fn.expand('%:p')
+      vim.fn.setreg('+', path)
+      vim.notify('Path copied to clipboard:\n' .. path)
+    end,
+    desc = 'Path (Absolute)',
+  },
+
   -- Window
   { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Terminal Normal', mode = 't' },
 
