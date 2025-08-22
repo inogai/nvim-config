@@ -80,6 +80,10 @@ vim.opt.wrap = true
 vim.opt.cc = '81'
 
 vim.lsp.inlay_hint.enable(true)
-vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config({ virtual_text = {
+  severity = {
+    min = vim.diagnostic.severity.WARN,
+  },
+} })
 
 vim.g.python3_host_prog = vim.env.NVIM_PYTHON_HOST

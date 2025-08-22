@@ -33,6 +33,7 @@ return {
           ['@markup.italic'] = { fg = C.blue },
           ['@custom.link.generic'] = { fg = C.sky, style = { 'underdotted' } },
           ['@custom.strong.underdotted'] = { fg = C.maroon, style = { 'bold', 'underdotted' } },
+          ['DiagnosticUnderlineInfo'] = { sp = C.teal, style = { 'undercurl' } },
         }
       end,
     },
