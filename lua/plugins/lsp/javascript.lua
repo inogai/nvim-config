@@ -4,6 +4,9 @@ local FILE_TYPES = {
   all = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'html' },
 }
 
+vim.lsp.enable('vtsls')
+vim.lsp.enable('eslint')
+
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -26,7 +29,9 @@ return {
       local get_option = vim.filetype.get_option
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.filetype.get_option = function(filetype, option)
-        return option == 'commentstring' and require('ts_context_commentstring.internal').calculate_commentstring() or get_option(filetype, option)
+        return option == 'commentstring'
+            and require('ts_context_commentstring.internal').calculate_commentstring()
+          or get_option(filetype, option)
       end
     end,
   },
@@ -48,11 +53,10 @@ return {
     opts_extend = { 'ensure_installed' },
     opts = {
       ensure_installed = {
-        'vtsls',
+        'eslint_d',
         'tailwindcss',
         'unocss',
-
-        'eslint_d',
+        'vtsls',
       },
       servers = {
         vtsls = {
