@@ -35,7 +35,7 @@ return {
   },
 
   {
-    'echasnovski/mini.ai',
+    'nvim-mini/mini.ai',
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = function()
       local ai = require('mini.ai')
@@ -87,7 +87,7 @@ return {
   },
 
   {
-    'echasnovski/mini.surround',
+    'nvim-mini/mini.surround',
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = {
       custom_surroundings = {

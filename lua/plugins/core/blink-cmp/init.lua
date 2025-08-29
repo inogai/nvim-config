@@ -4,7 +4,7 @@ local providers = require('plugins.core.blink-cmp.providers')
 return {
   -- Snippets
   {
-    'echasnovski/mini.snippets',
+    'nvim-mini/mini.snippets',
     version = '*',
     config = function()
       local gen_loader = require('mini.snippets').gen_loader

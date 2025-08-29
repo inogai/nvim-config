@@ -53,7 +53,7 @@ return {
   },
 
   {
-    'echasnovski/mini.indentscope',
+    'nvim-mini/mini.indentscope',
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = function(_, opts)
       vim.api.nvim_set_hl(0, 'MiniIndentscopeSymbol', { fg = '#c79652' })

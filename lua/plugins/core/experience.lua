@@ -2,7 +2,7 @@ return {
   { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
 
   {
-    'echasnovski/mini.pairs',
+    'nvim-mini/mini.pairs',
     event = { 'InsertEnter' },
     opts = {
       skip_next = [=[[%w%%%'%[%"%.%`%$]]=],

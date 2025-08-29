@@ -315,7 +315,7 @@ M.colors = {
 
 return {
   {
-    'echasnovski/mini.hipatterns',
+    'nvim-mini/mini.hipatterns',
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = function()
       local hi = require('mini.hipatterns')
