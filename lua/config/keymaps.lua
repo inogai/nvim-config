@@ -35,9 +35,6 @@ local keys = {
     desc = 'Path (Absolute)',
   },
 
-  -- Window
-  { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Terminal Normal', mode = 't' },
-
   -- Buffer
   { '<D-s>', '<cmd>w<cr><esc>', desc = '[S]ave File', mode = { 'i', 'x', 'n', 's' } },
   { '<leader>bd', function() Snacks.bufdelete() end, desc = '[B]uffer [D]elete' },
