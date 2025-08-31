@@ -1,7 +1,7 @@
 ---@type LazyPluginSpec[]
 return {
   {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
     lazy = false,
     priority = 1001,
     opts = {},
