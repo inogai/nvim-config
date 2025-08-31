@@ -21,6 +21,8 @@ return {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1001,
+    ---@type CatppuccinOptions
+    ---@diagnostic disable-next-line: missing-fields
     opts = {
       flavour = 'auto', -- latte, frappe, macchiato, mocha
       background = { -- :h background
@@ -28,6 +30,7 @@ return {
         dark = 'mocha',
       },
       custom_highlights = function(C)
+        local U = require('catppuccin.utils.colors')
         return {
           -- ['@markup.strong'] = { fg = C.maroon },
           ['@markup.italic'] = { fg = C.blue },
@@ -36,6 +39,10 @@ return {
           ['@module'] = { fg = C.peach, style = { 'italic' } },
           ['zshOperator'] = { link = '@operator' },
           ['DiagnosticUnderlineInfo'] = { sp = C.teal, style = { 'undercurl' } },
+          ['LspReferenceText'] = { bg = U.darken(C.yellow, 0.2) },
+          ['LspReferenceRead'] = { link = 'LspReferenceText' },
+          ['LspReferenceWrite'] = { link = 'LspReferenceText' },
+          ['LspReferenceTarget'] = { link = 'LspReferenceText' },
         }
       end,
     },
