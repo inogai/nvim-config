@@ -125,7 +125,6 @@ return {
     'nabekou29/js-i18n.nvim',
     ft = FILE_TYPES.all,
     dependencies = {
-      'neovim/nvim-lspconfig',
       'nvim-treesitter/nvim-treesitter',
       'nvim-lua/plenary.nvim',
     },
