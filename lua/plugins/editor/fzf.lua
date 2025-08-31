@@ -44,6 +44,9 @@ return {
       end
 
       vim.api.nvim_create_user_command('Zi', fzf.zoxide, {})
+      vim.api.nvim_create_user_command('Zz', fzf.zoxide, {})
+
+      fzf.register_ui_select()
 
       return {
         'default-title',
@@ -166,7 +169,12 @@ return {
       { '<leader>sD', '<cmd>FzfLua diagnostics_workspace<cr>', desc = 'Workspace Diagnostics' },
       { '<leader>sg', '<cmd>FzfLua live_grep<cr>', desc = 'Grep' },
       { '<leader>sh', function() FzfLua.helptags() end, desc = '[H]elp' },
-      { '<leader>sh', function() FzfLua.helptags({ fzf_opts = { ['--query'] = Utils.expand_visual() } }) end, desc = '[H]elp', mode = { 'v' } },
+      {
+        '<leader>sh',
+        function() FzfLua.helptags({ fzf_opts = { ['--query'] = Utils.expand_visual() } }) end,
+        desc = '[H]elp',
+        mode = { 'v' },
+      },
       { '<leader>sH', '<cmd>FzfLua highlights<cr>', desc = 'Search Highlight Groups' },
       { '<leader>sk', '<cmd>FzfLua keymaps<cr>', desc = 'Key Maps' },
       { '<leader>sm', '<cmd>FzfLua marks<cr>', desc = 'Jump to Mark' },
