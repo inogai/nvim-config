@@ -25,10 +25,11 @@ return {
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
     },
     opts = {},
     config = function(_, opts)
+      vim.notify(vim.inspect(opts.ensure_installed))
+
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -69,16 +70,6 @@ return {
           },
         },
       })
-
-      local ensure_installed = opts.ensure_installed or {}
-      if vim.fn.has('termux') == 1 then
-        ensure_installed = vim.tbl_filter(
-          function(server) return not vim.tbl_contains(opts.termux_no_install or {}, server) end,
-          ensure_installed
-        )
-      end
-
-      require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
     end,
   },
 }

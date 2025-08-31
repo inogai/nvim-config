@@ -1,20 +1,6 @@
 return {
-  {
-    'nvim-treesitter/nvim-treesitter',
-    opts = {
-      ensure_installed = { 'typst' },
-    },
-  },
-
-  {
-    'neovim/nvim-lspconfig',
-    opts = {
-      ensure_installed = { 'prettypst' },
-      servers = {
-        tinymist = {},
-      },
-    },
-  },
+  Utils.ts_ensure_installed({ 'typst' }),
+  Utils.mason_ensure_install({ 'prettypst' }),
 
   {
     'stevearc/conform.nvim',

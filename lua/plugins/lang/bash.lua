@@ -1,11 +1,5 @@
 return {
-  {
-    'neovim/nvim-lspconfig',
-    opts_extend = { 'ensure_installed', 'termux_no_install' },
-    opts = {
-      ensure_installed = { 'shfmt' },
-    },
-  },
+  Utils.mason_ensure_install({ 'shfmt' }),
 
   {
     'stevearc/conform.nvim',

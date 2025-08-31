@@ -1,9 +1,5 @@
 return {
-  {
-    'nvim-treesitter/nvim-treesitter',
-    optional = true,
-    opts = { ensure_installed = { 'norg' } },
-  },
+  Utils.ts_ensure_installed({ 'norg' }),
 
   {
     'nvim-neorg/neorg',

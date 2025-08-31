@@ -1,13 +1,5 @@
+vim.lsp.enable('cspell_ls')
+
 return {
-  {
-    'neovim/nvim-lspconfig',
-    optional = true,
-    opts = {
-      -- pnpm i -g @vlabo/cspell-lsp
-      ensure_installed = {},
-      servers = {
-        cspell_ls = {},
-      },
-    },
-  },
+  Utils.mason_ensure_install({ 'cspell-lsp' }),
 }

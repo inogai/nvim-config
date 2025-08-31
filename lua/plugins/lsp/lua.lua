@@ -8,10 +8,5 @@ vim.lsp.config('lua_ls', {
 })
 
 return {
-  {
-    'neovim/nvim-lspconfig',
-    opts = {
-      ensure_installed = { 'lua_ls', 'stylua' },
-    },
-  },
+  Utils.mason_ensure_install({ 'lua_ls', 'stylua' }),
 }

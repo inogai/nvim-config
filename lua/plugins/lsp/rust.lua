@@ -1,18 +1,6 @@
 return {
-  {
-    'nvim-treesitter/nvim-treesitter',
-    opts_extend = { 'ensure_installed' },
-    opts = { ensure_installed = { 'rust' } },
-  },
-
-  {
-    'neovim/nvim-lspconfig',
-    optional = true,
-    opts_extend = { 'ensure_installed' },
-    opts = {
-      ensure_installed = { 'rust_analyzer' },
-    },
-  },
+  Utils.ts_ensure_installed({ 'rust' }),
+  Utils.mason_ensure_install({ 'rust_analyzer' }),
 
   {
     'mrcjkb/rustaceanvim',

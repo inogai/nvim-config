@@ -17,9 +17,7 @@ end
 ---@param on_attach fun(client: vim.lsp.Client, buffer)
 ---@param name string | string[]
 function M.lsp_on_attach_v2(name, on_attach)
-  if type(name) == 'string' then
-    name = { name }
-  end
+  if type(name) == 'string' then name = { name } end
 
   return vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
@@ -67,9 +65,8 @@ function M.log(x) vim.notify(vim.inspect(x), vim.log.levels.INFO, { title = 'Log
 ---@param names string[]
 function M.mason_ensure_install(names)
   return {
-    'neovim/nvim-lspconfig',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
     optional = true,
-    opts_extend = { 'ensure_installed' },
     opts = {
       ensure_installed = names,
     },
