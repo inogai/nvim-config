@@ -1,8 +1,7 @@
----@module 'lazy'
 ---@module 'yazi'
 
+---@type LazyPluginSpec[]
 return {
-  ---@type LazySpec
   {
     'mikavilpas/yazi.nvim',
     version = '*', -- use the latest stable version

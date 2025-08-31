@@ -63,6 +63,7 @@ end
 function M.log(x) vim.notify(vim.inspect(x), vim.log.levels.INFO, { title = 'Log', render = 'minimal' }) end
 
 ---@param names string[]
+---@return LazyPluginSpec
 function M.mason_ensure_install(names)
   return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -74,6 +75,7 @@ function M.mason_ensure_install(names)
 end
 
 ---@param names string[]
+---@return LazyPluginSpec
 function M.ts_ensure_installed(names)
   return {
     'nvim-treesitter/nvim-treesitter',
