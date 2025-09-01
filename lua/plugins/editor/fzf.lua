@@ -147,12 +147,7 @@ return {
       -- goto
       {
         'gd',
-        function()
-          require('fzf-lua').lsp_definitions({
-            jump_to_single_result = true,
-            jump_on_cb = true,
-          })
-        end,
+        function() FzfLua.lsp_definitions({ jump1 = true, jump_on_cb = true }) end,
         desc = '[D]efinitions',
       },
       { 'gr', '<cmd>FzfLua lsp_references<cr>', desc = '[R]erferences' },
