@@ -4,8 +4,11 @@ local FILE_TYPES = {
   all = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'html' },
 }
 
-vim.lsp.enable('vtsls')
 vim.lsp.enable('eslint')
+vim.lsp.enable('vtsls')
+vim.lsp.config('eslint', {
+  filetypes = { 'toml', 'json', 'yaml', unpack(FILE_TYPES.all) },
+})
 vim.lsp.config('vtsls', {
   settings = {
     vtsls = {
@@ -129,21 +132,5 @@ return {
       'nvim-lua/plenary.nvim',
     },
     opts = {},
-  },
-
-  {
-    'stevearc/conform.nvim',
-    optional = true,
-    opts = {
-      formatters_by_ft = {
-        javascript = { 'eslint_d' },
-        javascriptreact = { 'eslint_d' },
-        typescript = { 'eslint_d' },
-        typescriptreact = { 'eslint_d' },
-        vue = { 'eslint_d' },
-        json = { 'eslint_d' },
-        yaml = { 'eslint_d' },
-      },
-    },
   },
 }
