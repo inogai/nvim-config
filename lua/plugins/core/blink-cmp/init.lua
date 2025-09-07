@@ -78,15 +78,14 @@ return {
           function(cmp)
             if vim.b[vim.api.nvim_get_current_buf()].nes_state then
               cmp.hide()
-              return (
-                require('copilot-lsp.nes').apply_pending_nes()
-                and require('copilot-lsp.nes').walk_cursor_end_edit()
-              )
+              local nes = require('copilot-lsp.nes')
+              return nes.apply_pending_nes() and nes.walk_cursor_end_edit()
             end
             return nil
           end,
           'select_and_accept',
           'snippet_forward',
+          'fallback',
         },
       },
 
