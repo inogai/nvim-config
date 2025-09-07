@@ -39,7 +39,7 @@ return {
           ['@module'] = { fg = C.peach, style = { 'italic' } },
           ['zshOperator'] = { link = '@operator' },
           ['DiagnosticUnderlineInfo'] = { sp = C.teal, style = { 'undercurl' } },
-          ['LspReferenceText'] = { bg = U.darken(C.yellow, 0.2) },
+          ['LspReferenceText'] = { bg = U.darken(C.yellow, 0.4) },
           ['LspReferenceRead'] = { link = 'LspReferenceText' },
           ['LspReferenceWrite'] = { link = 'LspReferenceText' },
           ['LspReferenceTarget'] = { link = 'LspReferenceText' },
