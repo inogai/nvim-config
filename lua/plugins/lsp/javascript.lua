@@ -6,6 +6,7 @@ local FILE_TYPES = {
 
 vim.lsp.enable('eslint')
 vim.lsp.enable('vtsls')
+vim.lsp.enable('tailwindcss')
 vim.lsp.config('eslint', {
   filetypes = { 'toml', 'json', 'yaml', unpack(FILE_TYPES.all) },
 })
