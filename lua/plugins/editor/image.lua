@@ -31,25 +31,12 @@ local typst_template = [[
 
 return {
   {
-    'inogai/snacks.nvim',
+    'folke/snacks.nvim',
+    lazy = false,
     ---@type snacks.Config
     opts = {
       image = {
-        doc = {
-          enable = true,
-          max_width = 80,
-          max_height = 10,
-        },
-        convert = {
-          magick = {
-            math = { '-density', 192, '{src}[0]' },
-          },
-        },
-        math = {
-          typst = {
-            tpl = typst_template,
-          },
-        },
+        enabled = true,
       },
     },
   },
