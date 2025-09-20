@@ -11,8 +11,6 @@ local toggle_keys = {
   -- Second row: asdfghjkl
   s = toggle_lsp('cspell_ls', 'C[S]pell'),
   d = Snacks.toggle.diagnostics({ name = '[D]iagnostics' }),
-  f = toggle_b('inogai__no_autoformat', '[F]ormat (Buffer)', { default = false, reversed = true }),
-  F = toggle_g('inogai__no_autoformat', '[F]ormat (Global)', { default = false, reversed = true }),
   h = Snacks.toggle.inlay_hints({ name = '[H]ints' }),
 
   -- Third row: zxcvbnm
