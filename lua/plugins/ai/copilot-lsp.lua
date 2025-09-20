@@ -1,10 +1,17 @@
 ---@type LazyPluginSpec[]
 return {
+  -- {
+  --   'zbirenbaum/copilot.lua',
+  --   enabled = false,
+  --   opts = {},
+  -- },
+
   {
     'copilotlsp-nvim/copilot-lsp',
+    lazy = false,
     init = function()
-      vim.lsp.enable('copilot_ls')
       vim.g.copilot_nes_debounce = 500
+      vim.lsp.enable('copilot_ls')
     end,
     keys = {
       {
