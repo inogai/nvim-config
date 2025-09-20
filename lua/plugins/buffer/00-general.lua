@@ -1,5 +1,23 @@
+---@type LazyPluginSpec[]
 return {
   {
+    -- Detect tabstop and shiftwidth automatically
+    'nmac427/guess-indent.nvim',
+    opts = {},
+  },
+  {
+    -- Provides auto-pairing of parentheses, brackets, and quotes
+    'nvim-mini/mini.pairs',
+    event = { 'InsertEnter' },
+    opts = {
+      skip_next = [=[[%w%%%'%[%"%.%`%$]]=],
+      skip_unbalanced = true,
+      markdown = true,
+    },
+  },
+  -- Motions
+  {
+    -- Provides a "flash" motion for quickly navigating to any location in the visible buffer
     'folke/flash.nvim',
     event = 'VeryLazy',
     ---@type Flash.Config

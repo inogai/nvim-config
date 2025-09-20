@@ -27,6 +27,7 @@
     "yazi",
     "netrw",
     "keymaps",
-    "undercurl"
+    "undercurl",
+    "textobjects"
   ]
 }

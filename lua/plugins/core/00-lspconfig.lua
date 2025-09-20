@@ -2,7 +2,7 @@
 return {
   {
     -- Manages LSP servers, DAP adapters, linters, and formatters.
-    'mason-norg/mason.nvim',
+    'mason-org/mason.nvim',
     lazy = false,
     priority = 1001,
     opts = {},

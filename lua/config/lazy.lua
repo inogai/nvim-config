@@ -29,7 +29,8 @@ local opts = {
     { import = 'plugins.ai' },
     { import = 'plugins.lang' },
     { import = 'plugins.lsp' },
-    { import = 'plugins.editor' },
+    { import = 'plugins.buffer' },
+    { import = 'plugins.ui' },
     { import = 'plugins.misc' },
   },
   -- Configure any other settings here. See the documentation for more details.

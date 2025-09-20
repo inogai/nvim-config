@@ -14,7 +14,7 @@ return {
 
       providers = {
         copilot = {
-          model = 'gpt-4o',
+          model = 'gemini-2.5-pro',
         },
       },
     },
