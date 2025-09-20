@@ -4,9 +4,9 @@ return {
     ft = { 'scala', 'sbt', 'java' },
     opts = function()
       local metals_config = require('metals').bare_config()
-      metals_config.on_attach = function(client, bufnr)
-        -- your on_attach function
-      end
+      -- metals_config.on_attach = function(client, bufnr)
+      --   -- your on_attach function
+      -- end
 
       return metals_config
     end,
