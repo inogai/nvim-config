@@ -1,25 +1,20 @@
 return {
   {
-    'inogai/moegi.nvim',
-    lazy = false,
-    dependencies = {
-      'rktjmp/lush.nvim',
+    -- Icon provider
+    'nvim-mini/mini.icons',
+    opts = {
+      lsp = {
+        copilot = { glyph = ' ', hl = 'MiniIconsGrey' },
+        avantecmd = { glyph = ' ', hl = 'MiniIconsGreen' },
+        avantemention = { glyph = '󰁥 ', hl = 'MiniIconsRed' },
+      },
     },
-    -- priority = 1001,
-    -- config = function() vim.cmd([[colorscheme moegi]]) end,
   },
   {
-    'folke/tokyonight.nvim',
-  },
-  {
-    'ellisonleao/gruvbox.nvim',
-  },
-  {
-    'rebelot/kanagawa.nvim',
-  },
-  {
+    -- Catppuccin Colorscheme
     'catppuccin/nvim',
     name = 'catppuccin',
+    lazy = false,
     priority = 1001,
     ---@type CatppuccinOptions
     ---@diagnostic disable-next-line: missing-fields
