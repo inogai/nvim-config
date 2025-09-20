@@ -134,4 +134,20 @@ return {
     },
     opts = {},
   },
+
+  {
+    'stevearc/conform.nvim',
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        javascript = { 'eslint_d' },
+        javascriptreact = { 'eslint_d' },
+        typescript = { 'eslint_d' },
+        typescriptreact = { 'eslint_d' },
+        vue = { 'eslint_d' },
+        json = { 'eslint_d' },
+        yaml = { 'eslint_d' },
+      },
+    },
+  },
 }
