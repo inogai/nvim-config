@@ -319,7 +319,7 @@ return {
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     opts = function()
       local hi = require('mini.hipatterns')
-      local nn = require('notebook-navigator')
+      -- local nn = require('notebook-navigator')
       return {
         -- custom LazyVim option to enable the tailwind integration
         tailwind = {
@@ -343,7 +343,7 @@ return {
           style = 'full',
         },
         highlighters = {
-          notebook_cell = nn.minihipatterns_spec,
+          -- notebook_cell = nn.minihipatterns_spec,
           hex_color = hi.gen_highlighter.hex_color({ priority = 2000 }),
           shorthand = {
             pattern = '()#%x%x%x()%f[^%x%w]',
@@ -368,9 +368,7 @@ return {
         })
         opts.highlighters.tailwind = {
           pattern = function()
-            if not vim.tbl_contains(opts.tailwind.ft, vim.bo.filetype) then
-              return
-            end
+            if not vim.tbl_contains(opts.tailwind.ft, vim.bo.filetype) then return end
             if opts.tailwind.style == 'full' then
               return '%f[%w:-]()[%w:-]+%-[a-z%-]+%-%d+()%f[^%w:-]'
             elseif opts.tailwind.style == 'compact' then
