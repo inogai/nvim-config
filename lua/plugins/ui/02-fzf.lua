@@ -16,7 +16,9 @@ return {
         defaults = {
           formatter = 'path.filename_first', -- formatter = 'path.dirname_first',
         },
+        ---@type fzf-lua.config.Files.p
         files = {
+          hidden = false,
           actions = {
             ['ctrl-i'] = { actions.toggle_ignore },
             ['ctrl-h'] = { actions.toggle_hidden },

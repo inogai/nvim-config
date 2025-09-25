@@ -25,6 +25,14 @@ return {
     -- refer to the configuration section below
     bigfile = { enabled = true },
     dashboard = require('lib.dashboard'),
+    image = {
+      enabled = true,
+      doc = {
+        max_width = 40,
+        max_height = 10,
+      },
+      math = { enabled = true },
+    },
     indent = { enabled = false },
     input = { enabled = true },
     picker = { enabled = false },
