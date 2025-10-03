@@ -3,12 +3,14 @@ return {
   Utils.mason_ensure_install({
     'markdownlint-cli2',
     'markdown-toc',
-    'prettierd',
+    -- use own fork of prettier for CJK wrapping
   }),
 
   {
     'stevearc/conform.nvim',
     optional = true,
+    ---@module 'conform'
+    ---@type conform.setupOpts
     opts = {
       formatters = {
         ['markdown-toc'] = {
@@ -16,6 +18,7 @@ return {
             for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
               if line:find('<!%-%- toc %-%->') then return true end
             end
+            return false
           end,
         },
         ['markdownlint-cli2'] = {
@@ -29,8 +32,8 @@ return {
         },
       },
       formatters_by_ft = {
-        ['markdown'] = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' },
-        ['markdown.mdx'] = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' },
+        ['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
+        ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
       },
     },
   },
