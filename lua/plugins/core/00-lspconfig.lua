@@ -18,7 +18,7 @@ return {
     'mason-org/mason-lspconfig.nvim',
     lazy = false,
     opts = {
-      automatic_enable = false,
+      automatic_enable = true,
     },
   },
   {
