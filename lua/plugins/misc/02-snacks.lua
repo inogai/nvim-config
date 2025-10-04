@@ -31,7 +31,7 @@ return {
         max_width = 40,
         max_height = 10,
       },
-      math = { enabled = true },
+      math = { enabled = false },
     },
     indent = { enabled = false },
     input = { enabled = true },
