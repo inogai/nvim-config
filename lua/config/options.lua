@@ -68,14 +68,17 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- Indentation and tabs
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
+
+-- UI enhancements
 vim.opt.laststatus = 3
 vim.opt.splitkeep = 'screen'
 vim.opt.conceallevel = 2
 
--- wrap related
+-- Wrapping and line display
 vim.opt.wrap = true
 vim.opt.cc = '81'
 
