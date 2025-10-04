@@ -1,4 +1,4 @@
-vim.lsp.enable('lua_ls')
+-- Lua LSP configuration
 vim.lsp.config('lua_ls', {
   settings = {
     Lua = {
@@ -8,5 +8,6 @@ vim.lsp.config('lua_ls', {
 })
 
 return {
+  Utils.ts_ensure_installed({ 'lua' }),
   Utils.mason_ensure_install({ 'lua_ls', 'stylua' }),
 }

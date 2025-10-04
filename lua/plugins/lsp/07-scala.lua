@@ -1,4 +1,6 @@
 return {
+  Utils.ts_ensure_installed({ 'scala' }),
+
   {
     'scalameta/nvim-metals',
     ft = { 'scala', 'sbt', 'java' },

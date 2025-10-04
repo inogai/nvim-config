@@ -4,12 +4,11 @@ local FILE_TYPES = {
   all = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'html' },
 }
 
-vim.lsp.enable('eslint')
-vim.lsp.enable('vtsls')
-vim.lsp.enable('tailwindcss')
+-- JavaScript/TypeScript LSP configurations
 vim.lsp.config('eslint', {
   filetypes = { 'toml', 'json', 'yaml', unpack(FILE_TYPES.all) },
 })
+
 vim.lsp.config('vtsls', {
   settings = {
     vtsls = {
@@ -46,7 +45,9 @@ vim.lsp.config('vtsls', {
   },
 })
 
--- required for ``enableMoveToFileCodeAction = true``
+
+
+-- Custom on_attach for vtsls to handle move to file refactoring
 Utils.lsp_on_attach_v2('vtsls', function(client, buffer)
   client.commands['_typescript.moveToFileRefactoring'] = function(command, ctx)
     ---@type string, string, lsp.Range
