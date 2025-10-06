@@ -1,3 +1,25 @@
+local function configureAutoformat()
+  vim.g.inogai_autoformat = true
+  require('snacks.toggle')
+    .new({
+      name = 'Autoformat',
+      set = function(val) vim.g.inogai_autoformat = val end,
+      get = function() return vim.g.inogai_autoformat ~= false end,
+    })
+    :map('<leader>uf')
+
+  vim.api.nvim_create_augroup('InogaiAutoformat', { clear = true })
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = 'InogaiAutoformat',
+    callback = function()
+      if vim.g.inogai_autoformat ~= false then
+        vim.lsp.buf.format({ async = false, timeout_ms = 2000 })
+        require('conform').format({ async = false })
+      end
+    end,
+  })
+end
+
 --- @type LazyPluginSpec[]
 return {
   {
@@ -5,12 +27,10 @@ return {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
+    init = function() configureAutoformat() end,
+    ---@type conform.setupOpts
     opts = {
       notify_on_error = false,
-      format_on_save = {
-        lsp_format = 'fallback',
-        timeout_ms = 500,
-      },
       formatters_by_ft = {
         lua = { 'stylua' },
       },
