@@ -13,6 +13,11 @@ return {
     ---@type conform.setupOpts
     opts = {
       formatters = {
+        ['@inogai/prettier'] = {
+          command = 'pnpm',
+          args = { 'dlx', '@inogai/prettier', '--stdin-filepath', '$FILENAME' },
+        },
+
         ['markdown-toc'] = {
           condition = function(_, ctx)
             for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
@@ -32,8 +37,8 @@ return {
         },
       },
       formatters_by_ft = {
-        ['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
-        ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
+        ['markdown'] = { '@inogai/prettier', 'markdownlint-cli2', 'markdown-toc' },
+        ['markdown.mdx'] = { '@inogai/prettier', 'markdownlint-cli2', 'markdown-toc' },
       },
     },
   },
