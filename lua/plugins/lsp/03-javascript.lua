@@ -1,13 +1,37 @@
 local FILE_TYPES = {
-  has_tag = { 'javascriptreact', 'typescriptreact', 'vue', 'html' },
-  has_code = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
-  all = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'html' },
+  has_tag = { 'javascriptreact', 'typescriptreact', 'vue', 'html', 'astro' },
+  has_code = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'astro' },
+  all = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'html', 'astro' },
 }
 
 -- JavaScript/TypeScript LSP configurations
 vim.lsp.config('eslint', {
   filetypes = { 'toml', 'json', 'yaml', unpack(FILE_TYPES.all) },
 })
+
+local typescript_settings = {
+  {
+    -- updateImportsOnFileMove = { enabled = 'always' },
+    suggest = {
+      completeFunctionCalls = true,
+    },
+    inlayHints = {
+      enumMemberValues = { enabled = true },
+      functionLikeReturnTypes = { enabled = true },
+      parameterNames = {
+        enabled = 'literals',
+        suppressWhenArgumentMatchesName = 't',
+      },
+      parameterTypes = { enabled = true },
+      propertyDeclarationTypes = { enabled = true },
+      variableTypes = { enabled = false },
+    },
+    preferences = {
+      importModuleSpecifier = 'non-relative',
+      -- importModuleSpecifierEnding = 'js',
+    },
+  },
+}
 
 vim.lsp.config('vtsls', {
   settings = {
@@ -21,31 +45,9 @@ vim.lsp.config('vtsls', {
         },
       },
     },
-    typescript = {
-      -- updateImportsOnFileMove = { enabled = 'always' },
-      suggest = {
-        completeFunctionCalls = true,
-      },
-      inlayHints = {
-        enumMemberValues = { enabled = true },
-        functionLikeReturnTypes = { enabled = true },
-        parameterNames = {
-          enabled = 'literals',
-          suppressWhenArgumentMatchesName = 't',
-        },
-        parameterTypes = { enabled = true },
-        propertyDeclarationTypes = { enabled = true },
-        variableTypes = { enabled = false },
-      },
-      preferences = {
-        importModuleSpecifier = 'non-relative',
-        -- importModuleSpecifierEnding = 'js',
-      },
-    },
+    typescript = typescript_settings,
   },
 })
-
-
 
 -- Custom on_attach for vtsls to handle move to file refactoring
 Utils.lsp_on_attach_v2('vtsls', function(client, buffer)
@@ -98,7 +100,13 @@ Utils.lsp_on_attach_v2('vtsls', function(client, buffer)
 end)
 
 return {
-  Utils.ts_ensure_installed({ 'jsdoc', 'javascript', 'typescript', 'html' }),
+  Utils.ts_ensure_installed({
+    'jsdoc',
+    'javascript',
+    'typescript',
+    'html',
+    'css',
+  }),
   Utils.mason_ensure_install({
     'eslint_d',
     'vtsls',
