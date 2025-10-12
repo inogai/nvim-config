@@ -1,16 +1,7 @@
-local function configureAutoformat()
-  vim.g.inogai_autoformat = true
-  require('snacks.toggle')
-    .new({
-      name = 'Autoformat',
-      set = function(val) vim.g.inogai_autoformat = val end,
-      get = function() return vim.g.inogai_autoformat ~= false end,
-    })
-    :map('<leader>uf')
-
-  vim.api.nvim_create_augroup('InogaiAutoformat', { clear = true })
+local setupAutocmds = function()
+  local group = vim.api.nvim_create_augroup('InogaiAutoformat', { clear = true })
   vim.api.nvim_create_autocmd('BufWritePre', {
-    group = 'InogaiAutoformat',
+    group = group,
     callback = function()
       if vim.g.inogai_autoformat ~= false then
         vim.lsp.buf.format({ async = false, timeout_ms = 2000 })
@@ -20,6 +11,20 @@ local function configureAutoformat()
   })
 end
 
+local function configureAutoformat()
+  vim.notify('Configuring autoformat...', vim.log.levels.DEBUG)
+  vim.g.inogai_autoformat = true
+  require('snacks.toggle')
+    .new({
+      name = 'Autoformat',
+      set = function(val) vim.g.inogai_autoformat = val end,
+      get = function() return vim.g.inogai_autoformat ~= false end,
+    })
+    :map('<leader>uf')
+
+  setupAutocmds()
+end
+
 --- @type LazyPluginSpec[]
 return {
   {
@@ -27,7 +32,11 @@ return {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
-    init = function() configureAutoformat() end,
+    init = function()
+      configureAutoformat()
+      -- configure autoformat again to make it run after obsidian
+      Utils.on_load('obsidian.nvim', setupAutocmds)
+    end,
     ---@type conform.setupOpts
     opts = {
       notify_on_error = false,

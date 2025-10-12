@@ -22,8 +22,7 @@ end
 return {
   {
     -- This plugin provides integration between Neovim and Obsidian.md
-    'obsidian-nvim/obsidian.nvim',
-    version = '*',
+    'inogai/obsidian.nvim',
     event = {
       'BufReadPre ' .. path_to_my_vault .. '/*.md',
       'BufNewFile ' .. path_to_my_vault .. '/*.md',
