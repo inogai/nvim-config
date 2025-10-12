@@ -28,6 +28,9 @@
     "netrw",
     "keymaps",
     "undercurl",
-    "textobjects"
+    "textobjects",
+    "bufnr",
+    "inogai",
+    "gitsigns"
   ]
 }
