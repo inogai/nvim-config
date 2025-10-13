@@ -1,3 +1,10 @@
+-- eslint also works for markdown files.
+-- we enable it globally (only project with eslint config will actually use it),
+-- if you want markdownlint only for markdown files, disable with eslint config.
+vim.lsp.config('eslint', {
+  filetypes = { 'markdown' },
+})
+
 return {
   Utils.ts_ensure_installed({ 'markdown', 'markdown_inline' }),
   Utils.mason_ensure_install({
