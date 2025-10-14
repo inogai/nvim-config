@@ -6,15 +6,15 @@ function M.stage_visual()
   local first_line = vim.fn.line('v')
   local last_line = vim.fn.line('.')
   require('gitsigns').stage_hunk({ first_line, last_line })
-  print('Staged ' .. (last_line - first_line + 1) .. ' lines')
 end
 
 function M.reset_visual()
   local first_line = vim.fn.line('v')
   local last_line = vim.fn.line('.')
   require('gitsigns').reset_hunk({ first_line, last_line })
-  print('Reset' .. (last_line - first_line + 1) .. ' lines')
 end
+
+local function gs() return require('gitsigns') end
 
 return {
   {
@@ -38,13 +38,13 @@ return {
       },
     },
     keys = {
-      { ']c', function() require('gitsigns').nav_hunk('next') end, desc = 'Next Hunk' },
-      { '[c', function() require('gitsigns').nav_hunk('prev') end, desc = 'Prev Hunk' },
-      { 'gh', M.stage_visual, desc = 'Stage Line' },
+      { ']c', function() gs().nav_hunk('next') end, desc = 'Next Hunk' },
+      { '[c', function() gs().nav_hunk('prev') end, desc = 'Prev Hunk' },
+      { 'gh', function() gs().stage_hunk() end, desc = 'Stage Hunk' },
       { 'gh', M.stage_visual, desc = 'Stage Visual', mode = 'v' },
-      { 'gH', M.reset_visual, desc = 'Reset Line' },
+      { 'gH', function() gs().reset_hunk() end, desc = 'Reset Hunk' },
       { 'gH', M.reset_visual, desc = 'Reset Visual', mode = 'v' },
-      { 'gp', function() require('gitsigns').preview_hunk() end, desc = 'Preview Hunk' },
+      -- { 'gp', function() require('gitsigns').preview_hunk() end, desc = 'Preview Hunk' },
       { 'go', function() require('gitsigns').preview_hunk_inline() end, desc = 'Preview Hunk Inline' },
     },
   },
