@@ -40,6 +40,9 @@ return {
     quickfile = { enabled = true },
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
+    terminal = {
+      shell = 'nu',
+    },
     words = { enabled = true },
   },
   keys = {
