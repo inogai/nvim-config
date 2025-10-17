@@ -17,15 +17,18 @@ return {
     -- Provides mappings between mason names and lsp names
     'mason-org/mason-lspconfig.nvim',
     lazy = false,
+    opts_extend = { 'automatic_enable.exclude' },
     opts = {
-      automatic_enable = true,
+      automatic_enable = {
+        exclude = {},
+      },
     },
   },
   {
     -- Declaratively installs tools via mason.nvim.
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     lazy = false,
-    opts = { ensure_installed = {} },
     opts_extend = { 'ensure_installed' },
+    opts = { ensure_installed = {} },
   },
 }
