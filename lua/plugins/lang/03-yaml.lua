@@ -1,8 +1,6 @@
 vim.lsp.enable('yamlls')
 vim.lsp.config('yamlls', {
-  before_init = function(_, client_config)
-    client_config.settings.yaml.schemas = require('schemastore').json.schemas()
-  end,
+  before_init = function(_, client_config) client_config.settings.yaml.schemas = require('schemastore').yaml.schemas() end,
   settings = {
     yaml = {
       schemas = {},
