@@ -5,6 +5,19 @@ vim.lsp.config('eslint', {
   filetypes = { 'markdown' },
 })
 
+-- Enable automatic continuation of markdown quotes
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    -- 'r' enables continuation of comments/elements on Enter
+    -- 'o' enables continuation when using 'o' or 'O' to open new lines
+    vim.opt_local.formatoptions:append('ro')
+
+    vim.opt_local.comments = ''
+    vim.opt_local.comments:append({ 'nb:>', 'nb:-', 'nb:*' })
+  end,
+})
+
 return {
   Utils.ts_ensure_installed({ 'markdown', 'markdown_inline' }),
   Utils.mason_ensure_install({
