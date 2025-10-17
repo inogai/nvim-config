@@ -28,6 +28,7 @@ return {
       -- 'giuxtaposition/blink-cmp-copilot',
       'fang2hou/blink-copilot',
       'Kaiser-Yang/blink-cmp-avante',
+      'Kaiser-Yang/blink-cmp-dictionary',
     },
     opts_extend = { 'sources.default' },
 
@@ -94,7 +95,7 @@ return {
       },
 
       sources = {
-        default = { 'copilot', 'avante', 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'copilot', 'avante', 'lsp', 'path', 'snippets', 'buffer', 'dictionary' },
         providers = providers,
       },
     },
